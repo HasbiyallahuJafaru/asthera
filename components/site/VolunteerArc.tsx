@@ -11,27 +11,28 @@ export type VolunteerCard = {
   photo: string | null;
 };
 
-/** How long each volunteer holds the front, then the time the arc takes to turn. */
+/** How long each volunteer holds the front, then the time the row takes to move. */
 const HOLD_MS = 3000;
 const TURN_MS = 900;
 /** Slots either side of the front; the outermost is where cards fade out. */
 const REACH = 3;
 
 /**
- * Volunteers on a slowly turning arc.
+ * Volunteers on a slowly turning row.
  *
- * Cards sit on a shallow curve that rises toward the edges. The card at the
- * front is full size; each step away from it shrinks, lifts and dims it, and
- * at the edge of the arc it fades out entirely. Every three seconds the arc
+ * Circles sit on one horizontal line, centred. The one at the front is full
+ * size; each step away shrinks it by about a third and dims it, and past the
+ * edge of the row it fades out entirely. Circles are spaced
+ * by an equal gap between their edges, so they never overlap. Every three seconds the row
  * turns one place, so the next volunteer comes to the front, and the last one
- * wraps round unseen to rejoin at the far side.
+ * wraps round unseen to rejoin at the far end.
  *
  * It scrolls on its own, pausing only offscreen, in a hidden tab, or when the
  * visitor presses pause, and does not move by itself under
  * prefers-reduced-motion. The arrows turn it by hand in every mode.
  */
 export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard[] }) {
-  // The arc needs a card for every visible slot plus one hidden on each side,
+  // The row needs a card for every visible slot plus one hidden on each side,
   // so a card always wraps round while faded out. Short lists repeat.
   const volunteers = fill(people, REACH * 2 + 2);
   const count = volunteers.length;
@@ -84,25 +85,23 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
 
   if (count === 0) return null;
 
-  // The arc's geometry scales with the stage: a wide, shallow curve on desktop,
-  // a tighter one on a phone.
+  // Sizes scale with the stage: larger circles and wider gaps on desktop.
   const compact = width < 640;
   const cardWidth = compact ? Math.min(220, width * 0.56) : Math.min(280, width * 0.24);
-  const lift = compact ? 22 : 34;
-  // Neighbours stand clear of the front card instead of sliding under it: half
-  // the front card, half a shrunken neighbour, and a gap. On a phone that puts
-  // them at the screen edges, just peeking in.
-  const gap = compact ? 12 : 16;
-  const spacing = cardWidth * (0.5 + 0.5 * cardScale(1)) + gap;
+  const gap = compact ? 12 : 20;
 
-  // Tall enough for whichever visible card reaches highest (usually the front
-  // one), with no dead band above it.
-  const cardHeight = cardWidth * 1.25;
-  let stageHeight = 0;
-  for (let distance = 0; distance < REACH; distance += 1) {
-    const scale = cardScale(distance);
-    stageHeight = Math.max(stageHeight, cardHeight * scale + Math.pow(distance, 1.35) * lift);
+  // Circles are spaced edge to edge rather than centre to centre: each sits one
+  // `gap` clear of its neighbour whatever their sizes, so the gaps read as even
+  // and the shrinking outer circles never overlap.
+  const radiusAt = (distance: number) => (cardWidth * cardScale(distance)) / 2;
+  const centreX = [0];
+  for (let distance = 1; distance <= REACH; distance += 1) {
+    centreX.push(centreX[distance - 1] + radiusAt(distance - 1) + gap + radiusAt(distance));
   }
+
+  // Every centre sits on one horizontal line through the middle of the stage,
+  // which is exactly as tall as the front circle.
+  const stageHeight = cardWidth;
 
   const offsets = volunteers.map((_, index) => {
     let offset = (index - active) % count;
@@ -128,21 +127,21 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
           const distance = Math.abs(offset);
           const hidden = distance >= REACH;
 
-          const x = offset * spacing;
-          const y = -Math.pow(distance, 1.35) * lift;
-          const scale = cardScale(distance);
-          const opacity = hidden ? 0 : 1 - distance * 0.22;
+          const step = Math.min(distance, REACH);
+          const x = Math.sign(offset) * centreX[step];
+          const scale = cardScale(step);
+          const opacity = hidden ? 0 : 1 - distance * 0.2;
 
           return (
             <figure
               key={index}
               aria-hidden={offset !== 0}
-              className="absolute bottom-0 left-1/2 m-0"
+              className="absolute top-0 left-1/2 m-0"
               style={{
                 width: cardWidth,
                 marginLeft: -cardWidth / 2,
-                transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-                transformOrigin: "50% 100%",
+                transform: `translate3d(${x}px, 0, 0) scale(${scale})`,
+                transformOrigin: "50% 50%",
                 opacity,
                 zIndex: 10 - distance,
                 transition: `transform ${TURN_MS}ms cubic-bezier(0.65, 0, 0.35, 1), opacity ${TURN_MS}ms ease`,
@@ -150,7 +149,7 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
               }}
             >
               <div
-                className={`relative aspect-[4/5] overflow-hidden rounded-card bg-wash-navy shadow-[0_24px_48px_-24px_rgba(19,52,88,0.45)] transition-[filter] duration-700 ${
+                className={`relative aspect-square overflow-hidden rounded-full bg-wash-navy shadow-[0_24px_48px_-24px_rgba(19,52,88,0.45)] transition-[filter] duration-700 ${
                   offset === 0 ? "" : "saturate-[0.6]"
                 }`}
               >
@@ -216,8 +215,9 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
   );
 }
 
+/** Front circle full size, then each step out roughly two thirds of the last. */
 function cardScale(distance: number) {
-  return Math.max(0.4, 1 - distance * 0.17);
+  return Math.pow(0.66, distance);
 }
 
 function fill<T>(items: T[], minimum: number) {

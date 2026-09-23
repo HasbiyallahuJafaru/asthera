@@ -259,7 +259,7 @@ export default async function HomePage() {
         </Rail>
       </Section>
 
-      {/* Volunteers, on an arc that turns one place every few seconds. */}
+      {/* Volunteers, on a row that moves one place every few seconds. */}
       <Section>
         <Rail width="wide" className="py-24 lg:py-32">
           <Reveal className="mx-auto max-w-[40rem] text-center">

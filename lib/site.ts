@@ -501,7 +501,8 @@ export type Volunteer = {
 /**
  * Volunteers for the home page arc. PLACEHOLDERS: replace every entry with a
  * real, consenting volunteer before publishing (content/facts.md, section 5).
- * Portraits go in /public/media as `<photo>.jpg`, 4:5, at least 800 x 1000.
+ * Portraits go in /public/media as `<photo>.jpg`, square, at least 800 x 800,
+ * with the face centred: the carousel crops them to a circle.
  */
 export const volunteers: Volunteer[] = [
   { photo: "volunteer-1", name: "Volunteer name", role: "Role or area of work" },
