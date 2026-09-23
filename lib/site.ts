@@ -490,3 +490,26 @@ export const practices = [
     body: "Testing, validating and refining every solution as we go.",
   },
 ] as const;
+
+export type Volunteer = {
+  /** Base filename in /public/media for the portrait, without extension. */
+  photo: string;
+  name: string;
+  role: string;
+};
+
+/**
+ * Volunteers for the home page arc. PLACEHOLDERS: replace every entry with a
+ * real, consenting volunteer before publishing (content/facts.md, section 5).
+ * Portraits go in /public/media as `<photo>.jpg`, 4:5, at least 800 x 1000.
+ */
+export const volunteers: Volunteer[] = [
+  { photo: "volunteer-1", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-2", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-3", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-4", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-5", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-6", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-7", name: "Volunteer name", role: "Role or area of work" },
+  { photo: "volunteer-8", name: "Volunteer name", role: "Role or area of work" },
+];

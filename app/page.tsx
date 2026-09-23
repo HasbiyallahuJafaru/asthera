@@ -10,15 +10,16 @@ import Link from "next/link";
 
 import { NewsletterForm } from "@/components/site/NewsletterForm";
 import { PressMarquee } from "@/components/site/PressMarquee";
+import { VolunteerArc } from "@/components/site/VolunteerArc";
 import { EarthHero } from "@/components/site/EarthHero";
 import { Badge } from "@/components/ui/Badge";
 import { Button, TextLink } from "@/components/ui/Button";
-import { MediaSlot } from "@/components/ui/MediaSlot";
+import { MediaSlot, resolveMedia } from "@/components/ui/MediaSlot";
 import { ProgrammeList } from "@/components/ui/ProgrammeList";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rail, Section } from "@/components/ui/Section";
 import { pageMeta } from "@/lib/seo";
-import { approach, cta, founder, practices } from "@/lib/site";
+import { approach, cta, founder, practices, volunteers } from "@/lib/site";
 import { getPosts, getProgrammes } from "@/sanity/queries";
 
 export const revalidate = 60;
@@ -258,6 +259,31 @@ export default async function HomePage() {
         </Rail>
       </Section>
 
+      {/* Volunteers, on an arc that turns one place every few seconds. */}
+      <Section>
+        <Rail width="wide" className="py-24 lg:py-32">
+          <Reveal className="mx-auto max-w-[40rem] text-center">
+            <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
+              Meet our <span className="accent-word">volunteers</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-[48ch] leading-relaxed text-text-dim">
+              The people who give their time to run sessions, mentor students and build projects
+              with us.
+            </p>
+          </Reveal>
+
+          <div className="mt-10">
+            <VolunteerArc
+              volunteers={volunteers.map((volunteer) => ({
+                name: volunteer.name,
+                role: volunteer.role,
+                photo: resolveMedia(volunteer.photo),
+              }))}
+            />
+          </div>
+        </Rail>
+      </Section>
+
       {/* Leadership. Image left and low, quote pulled out into the gutter. */}
       <Section arc={{ x: 16, y: 28, rx: 38, ry: 25, rotate: -21, colour: "green", opacity: 0.22 }}>
         <Rail width="wide" className="py-24 lg:py-32">
@@ -361,7 +387,7 @@ export default async function HomePage() {
               </dl>
             </div>
 
-            <Reveal variant="right" delay={0.1} className="lg:col-span-4 lg:pt-24">
+            <Reveal variant="right" delay={0.1} className="min-w-0 lg:col-span-4 lg:pt-24">
               <div className="rounded-card border border-line bg-page p-7">
                 <h3 className="text-xl leading-snug tracking-tight text-text">Stay in the loop.</h3>
                 <p className="mt-2.5 mb-6 text-sm leading-relaxed text-text-dim">

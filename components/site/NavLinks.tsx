@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Planet } from "@phosphor-icons/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -21,9 +21,9 @@ type NavProgramme = { slug: string; name: string; summary: string };
  *
  * The pills and the active tint carry over unchanged from the previous list,
  * so the header does not read as a different component. The change is the
- * Our work item: hovering it now opens a panel that names each area of work and
- * says in one line what it does, so the nav answers "what do they actually
- * run" without a detour through the index page.
+ * Our work item: hovering it opens a compact two-column panel naming each area
+ * of work, so the nav answers "what do they actually do" without a detour
+ * through the index page.
  */
 export function NavLinks({ programmes }: { programmes: NavProgramme[] }) {
   const pathname = usePathname();
@@ -45,49 +45,30 @@ export function NavLinks({ programmes }: { programmes: NavProgramme[] }) {
                 </NavigationMenuTrigger>
 
                 <NavigationMenuContent>
-                  <div className="w-[20rem] p-2 sm:w-[32rem]">
-                    <ul className="grid">
+                  <div className="w-[19rem] p-2 sm:w-[30rem]">
+                    <ul className="grid gap-0.5 sm:grid-cols-2">
                       {programmes.map((programme) => (
                         <li key={programme.slug}>
-                          <NavigationMenuLink asChild className="rounded-xl p-1">
+                          <NavigationMenuLink asChild className="rounded-lg">
                             <Link
                               href={`/work/${programme.slug}`}
-                              className="group flex items-start gap-4 rounded-xl p-3.5"
+                              className="block rounded-lg px-3 py-2.5 text-sm leading-snug text-text"
                             >
-                              <span
-                                aria-hidden
-                                className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-pill bg-accent-soft text-accent"
-                              >
-                                <Planet size={18} />
-                              </span>
-                              <span className="min-w-0">
-                                <span className="block text-sm font-medium text-text">
-                                  {programme.name}
-                                </span>
-                                <span className="mt-1 block line-clamp-2 text-sm leading-snug text-text-dim">
-                                  {programme.summary}
-                                </span>
-                              </span>
-                              <ArrowRight
-                                size={15}
-                                weight="bold"
-                                aria-hidden
-                                className="mt-1 ml-auto shrink-0 text-accent opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
-                              />
+                              {programme.name}
                             </Link>
                           </NavigationMenuLink>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="mt-1 border-t border-line pt-1">
-                      <NavigationMenuLink asChild className="rounded-xl p-1">
+                    <div className="mt-1.5 border-t border-line pt-1.5">
+                      <NavigationMenuLink asChild className="rounded-lg">
                         <Link
                           href="/work"
-                          className="flex flex-row items-center justify-between px-3.5 py-3 text-sm font-medium text-text"
+                          className="flex flex-row items-center gap-1.5 px-3 py-2 text-sm font-medium text-accent"
                         >
                           All our work
-                          <ArrowRight size={15} weight="bold" aria-hidden className="text-accent" />
+                          <ArrowRight size={14} weight="bold" aria-hidden />
                         </Link>
                       </NavigationMenuLink>
                     </div>

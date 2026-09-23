@@ -414,3 +414,21 @@ header[data-over-hero="true"] {
   --line: transparent;
   --line-strong: rgb(255 255 255 / 0.28);
 }
+
+/* The volunteer carousel's caption, re-keyed on every turn so it eases in. */
+.volunteer-caption {
+  animation: volunteer-caption 600ms var(--ease) both;
+}
+
+@keyframes volunteer-caption {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .volunteer-caption {
+    animation: none;
+  }
+}

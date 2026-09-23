@@ -71,7 +71,7 @@ export function MediaSlot({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-media border border-dashed border-line-strong bg-surface ${className}`}
+      className={`relative w-full overflow-hidden rounded-media border border-dashed border-line-strong bg-surface ${className}`}
       style={{ aspectRatio: `${width} / ${height}` }}
       role="img"
       aria-label={alt}

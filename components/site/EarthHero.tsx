@@ -460,7 +460,8 @@ export function EarthHero({
         const radius = Math.min(0.52, halfWidth * 0.2);
         for (const { mesh, el, side } of labels) {
           mesh.visible = wide;
-          mesh.scale.setScalar(side < 0 ? radius * 0.9 : radius);
+          // Mercury is 2,440 km in radius to Mars's 3,390 km: 0.72 of the size.
+          mesh.scale.setScalar(side < 0 ? radius * 0.72 : radius);
           mesh.position.set(side * (halfWidth - radius * 0.02), 0.2, PLANET_Z);
           if (!el) continue;
           if (!wide) {
