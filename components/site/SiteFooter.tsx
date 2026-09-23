@@ -1,6 +1,7 @@
 import { LinkedinLogo, XLogo } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/primitives/tooltip";
 import { Rail, Section } from "@/components/ui/Section";
 import { contact, site, socials } from "@/lib/site";
 import { BrandLogo } from "./BrandLogo";
@@ -10,7 +11,7 @@ const columns = [
     heading: "Explore",
     links: [
       { href: "/about", label: "About" },
-      { href: "/programmes", label: "Programmes" },
+      { href: "/work", label: "Our work" },
       { href: "/founder", label: "Founder" },
       { href: "/journal", label: "Journal" },
     ],
@@ -19,7 +20,7 @@ const columns = [
     heading: "Work with us",
     links: [
       { href: "/partner", label: "Partner with us" },
-      { href: "/programmes", label: "Host a session" },
+      { href: "/work/stem-space-education", label: "Education sessions" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -42,8 +43,8 @@ export function SiteFooter() {
           <div className="max-w-xs">
             <BrandLogo className="h-14 w-auto" variant="light" />
             <p className="mt-6 text-sm leading-relaxed text-white/70">
-              Astronomy education, STEM outreach and satellite technology applied to the problems
-              Nigeria has now.
+              Space intelligence, Earth observation and STEM education. Bridging the stars and the
+              soil.
             </p>
           </div>
 
@@ -68,24 +69,35 @@ export function SiteFooter() {
           <div>
             <h2 className="text-sm font-medium text-on-navy">Follow us</h2>
             <div className="mt-5 flex items-center gap-2.5">
-              <a
-                href={socials.linkedin}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="ASTHERA on LinkedIn"
-                className="flex h-10 w-10 items-center justify-center rounded-pill border border-white/25 text-white/80 transition-colors duration-200 hover:border-gold hover:text-gold"
-              >
-                <LinkedinLogo size={18} />
-              </a>
-              <a
-                href={socials.x}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Fauziyya Auwal Muhammad on X"
-                className="flex h-10 w-10 items-center justify-center rounded-pill border border-white/25 text-white/80 transition-colors duration-200 hover:border-gold hover:text-gold"
-              >
-                <XLogo size={18} />
-              </a>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href={socials.linkedin}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="ASTHERA on LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-pill border border-white/25 text-white/80 transition-colors duration-200 hover:border-gold hover:text-gold"
+                  >
+                    <LinkedinLogo size={18} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>ASTHERA on LinkedIn</TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a
+                    href={socials.x}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label="Fauziyya Auwal Muhammad on X"
+                    className="flex h-10 w-10 items-center justify-center rounded-pill border border-white/25 text-white/80 transition-colors duration-200 hover:border-gold hover:text-gold"
+                  >
+                    <XLogo size={18} />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent>Fauziyya Auwal Muhammad on X</TooltipContent>
+              </Tooltip>
             </div>
 
             <a

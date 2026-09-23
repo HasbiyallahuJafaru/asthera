@@ -19,6 +19,9 @@ export function VideoEmbed({
   channelUrl,
   poster,
   className = "",
+  frameClassName = "rounded-tl-band rounded-br-band",
+  orientation = "landscape",
+  sizes = "(min-width: 1024px) 60vw, 100vw",
 }: {
   id: string;
   title: string;
@@ -27,12 +30,20 @@ export function VideoEmbed({
   /** Path to a locally hosted still, so no request reaches YouTube on load. */
   poster: string;
   className?: string;
+  /** Radii for the media box. A secondary video beside a lead one wants less. */
+  frameClassName?: string;
+  orientation?: "landscape" | "portrait";
+  sizes?: string;
 }) {
   const [playing, setPlaying] = useState(false);
 
   return (
     <figure className={className}>
-      <div className="relative aspect-video w-full overflow-hidden rounded-tl-band rounded-br-band bg-navy">
+      <div
+        className={`relative w-full overflow-hidden bg-navy ${
+          orientation === "portrait" ? "aspect-[9/16]" : "aspect-video"
+        } ${frameClassName}`}
+      >
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
@@ -52,7 +63,7 @@ export function VideoEmbed({
               src={poster}
               alt=""
               fill
-              sizes="(min-width: 1024px) 60vw, 100vw"
+              sizes={sizes}
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <span

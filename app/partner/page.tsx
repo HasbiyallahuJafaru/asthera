@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { FaqAccordion } from "@/components/site/FaqAccordion";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Rail, Section } from "@/components/ui/Section";
 import { breadcrumbGraph, faqGraph, pageMeta } from "@/lib/seo";
@@ -10,26 +11,26 @@ import { contact } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "Partner with ASTHERA",
   description:
-    "Work with ASTHERA on astronomy education, STEM outreach and applied satellite technology in Nigeria. For funders, universities, agencies and schools.",
+    "Work with ASTHERA on space-intelligence projects, flood and climate risk, agriculture, environmental monitoring, research and STEM education. For government, universities, companies, NGOs and funders.",
   path: "/partner",
 });
 
 const ways = [
   {
-    title: "Fund a programme",
-    body: "Direct support for astronomy teaching, outreach sessions and the equipment they run on. We report on what your funding reached.",
+    title: "Commission intelligence",
+    body: "Bring us a question about flood risk, crops, land or environmental change. We find the right data, analyse it and deliver findings your team can act on.",
+  },
+  {
+    title: "Get technical support",
+    body: "Geospatial and GIS analysis, data visualisation and training for government bodies and institutions building their own capability.",
   },
   {
     title: "Collaborate on research",
-    body: "Joint work on satellite and geospatial applications for climate, agriculture, flood management and security in African contexts.",
+    body: "Joint research and technology projects with universities, research organisations and international partners.",
   },
   {
-    title: "Host a session",
-    body: "Schools, universities and community organisations can bring an ASTHERA astronomy or STEM session to their students.",
-  },
-  {
-    title: "Supply equipment",
-    body: "Telescopes, computing and teaching hardware go directly into programmes and stay with the institutions that host them.",
+    title: "Support education and youth",
+    body: "Fund, host or co-run STEM and space education, workshops, mentorship and innovation challenges for young people.",
   },
 ];
 
@@ -37,17 +38,22 @@ const faqs = [
   {
     question: "Who does ASTHERA partner with?",
     answer:
-      "Funders, universities, government agencies, schools and companies who want African space science capability built locally rather than imported. Partnerships cover programme funding, research collaboration, equipment and outreach hosting.",
+      "Government institutions, universities, research organisations, private companies, NGOs and international organisations. We work across disciplines and prefer to build with partners rather than alone.",
   },
   {
-    question: "How do I request an ASTHERA session for my school?",
+    question: "What does an intelligence project look like?",
     answer:
-      "Send a message through the partnership form on astheraspace.com selecting the option to host a programme, including your location, the age group and the number of students.",
+      "It starts with the problem, not the data. We agree the question and who will use the answer, choose the satellite and geospatial data that fits, analyse it, and deliver the result in a form that supports a real decision.",
   },
   {
-    question: "How quickly does ASTHERA respond to enquiries?",
+    question: "How do I request a session for my school or university?",
     answer:
-      "ASTHERA is a small team. Enquiries are answered directly by the founder, usually within a week.",
+      "Send a message through the form below and choose the education option. Include your location, the age group and roughly how many students.",
+  },
+  {
+    question: "How quickly does ASTHERA respond?",
+    answer:
+      "ASTHERA is a small, early-stage team, and enquiries are answered directly, usually within a week.",
   },
 ];
 
@@ -61,10 +67,10 @@ export default function PartnerPage() {
         badge="Partner with us"
         title={
           <>
-            Build it here, rather than <span className="accent-word">import it</span>.
+            Bring us a problem <span className="accent-word">on the ground</span>.
           </>
         }
-        lede="ASTHERA works with funders, universities, agencies and schools who want space science capability rooted in Nigeria. Tell us what you have in mind."
+        lede="We work with government, universities, research organisations, companies, NGOs and international bodies. Tell us the challenge and we will work out what space data can do about it."
       />
 
       <Section>
@@ -103,7 +109,7 @@ export default function PartnerPage() {
               Start a conversation
             </h2>
             <p className="mt-3 mb-9 text-sm leading-relaxed text-text-dim">
-              This reaches the founder directly.
+              This reaches the ASTHERA team directly.
             </p>
             <EnquiryForm defaultTopic="partnership" />
           </div>
@@ -117,14 +123,7 @@ export default function PartnerPage() {
           Before you write
         </h2>
 
-        <dl className="mt-10 grid gap-10 md:grid-cols-3 md:gap-x-12">
-          {faqs.map((faq) => (
-            <div key={faq.question}>
-              <dt className="text-base font-medium text-text">{faq.question}</dt>
-              <dd className="mt-2.5 text-sm leading-relaxed text-text-dim">{faq.answer}</dd>
-            </div>
-          ))}
-        </dl>
+        <FaqAccordion faqs={faqs} />
       </Rail>
       </Section>
     </>

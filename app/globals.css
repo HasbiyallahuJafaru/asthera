@@ -23,7 +23,10 @@
   a large radius; cards use 20px; media 16px; controls are fully rounded.
 */
 
-:root {
+:root,
+/* The nav panel opens onto the page palette even when the header above it is
+   in its over-hero state, so it re-declares the light tokens. */
+[data-slot="navigation-menu-viewport"] {
   color-scheme: light;
 
   --page: #ffffff;
@@ -173,6 +176,149 @@ body {
   }
 }
 
+/*
+  Keyframes for the Radix-backed primitives in components/primitives. Written
+  here rather than pulling in tw-animate-css, so the openings share the site's
+  own easing token instead of a second motion vocabulary. The reduced-motion
+  block at the end of this file collapses all of them.
+*/
+
+@keyframes asthera-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes asthera-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Menus resolve downward from the control that opened them. */
+@keyframes asthera-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.375rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes asthera-pop-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+  }
+}
+
+@keyframes asthera-slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes asthera-slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes asthera-slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes asthera-slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes asthera-slide-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes asthera-slide-out-top {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes asthera-slide-in-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes asthera-slide-out-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Radix measures the panel and exposes the height as a custom property. */
+@keyframes asthera-accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes asthera-accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
 /* Long-form article body coming out of Sanity Portable Text. */
 .prose-asthera {
   color: var(--text-dim);
@@ -253,4 +399,18 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Over the home hero the header is clear glass: the same components, with the
+   text and surface tokens flipped to read on the night sky behind them. */
+header[data-over-hero="true"] {
+  color-scheme: dark;
+  --page: rgb(255 255 255 / 0.06);
+  --surface: rgb(255 255 255 / 0.12);
+  --surface-hover: rgb(255 255 255 / 0.18);
+  --text: #ffffff;
+  --text-dim: rgb(255 255 255 / 0.78);
+  --text-faint: rgb(255 255 255 / 0.6);
+  --line: transparent;
+  --line-strong: rgb(255 255 255 / 0.28);
 }

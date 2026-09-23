@@ -8,44 +8,71 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rail, Section } from "@/components/ui/Section";
 import { breadcrumbGraph, faqGraph, pageMeta } from "@/lib/seo";
-import { affiliations, cta, founder, site } from "@/lib/site";
-import { getProgrammes } from "@/sanity/queries";
-
-export const revalidate = 60;
+import { approach, cta, practices, site } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
   title: "About ASTHERA",
   description:
-    "ASTHERA is a space-tech and astronomy initiative based in Kaduna, Nigeria, working on astronomy education, STEM outreach and satellite technology applied to African problems.",
+    "ASTHERA is a Nigerian space-intelligence company based in Kaduna. We turn satellite, Earth-observation and geospatial data into practical intelligence, and develop young African talent in space and technology.",
   path: "/about",
 });
+
+/** The eight core goals from the company profile, grouped by what they build. */
+const goals = [
+  {
+    heading: "Intelligence",
+    items: [
+      "Develop practical space-intelligence solutions from Earth-observation and geospatial data.",
+      "Apply satellite data to environmental, climate, agricultural and disaster-risk problems.",
+      "Build tools for flood-risk monitoring and early warning.",
+      "Support data-driven agricultural and environmental decisions.",
+    ],
+  },
+  {
+    heading: "People",
+    items: [
+      "Develop young people through STEM, space education, mentorship and practical technology programmes.",
+      "Raise awareness and practical use of space technology in Nigeria and across Africa.",
+    ],
+  },
+  {
+    heading: "Institution",
+    items: [
+      "Partner with government, universities, research bodies, companies, NGOs and international organisations.",
+      "Build an African company able to develop scalable space-technology products and services.",
+    ],
+  },
+];
 
 const faqs = [
   {
     question: "What is ASTHERA?",
     answer:
-      "ASTHERA is a Nigerian space-tech and astronomy initiative. It works on three fronts: astronomy education, STEM outreach, and the application of satellite and geospatial technology to challenges across Africa including climate monitoring, agriculture, flood management and security.",
+      "ASTHERA is a Nigerian space-technology and space-intelligence company. It turns satellite, Earth-observation and geospatial data into clear, practical intelligence for problems such as flood risk, agriculture, climate resilience and environmental monitoring, and it runs STEM and space education for young people.",
+  },
+  {
+    question: "Does ASTHERA just supply satellite data?",
+    answer:
+      "No. ASTHERA's focus is interpretation. It works from a real problem, chooses the data that fits, analyses it and delivers intelligence that supports a decision, rather than handing over raw imagery.",
   },
   {
     question: "Who founded ASTHERA?",
     answer:
-      "ASTHERA was founded by Fauziyya Auwal Muhammad, an astrophysicist and Graduate Assistant in the Department of Physics at Kaduna State University. She is an astronaut candidate with Titans Space Industries and was selected for the 2026 LunAres Research Station analogue mission in Poland.",
+      "ASTHERA was founded by Fauziyya Auwal Muhammad, an astrophysicist and Graduate Assistant in the Department of Physics at Kaduna State University. She is also an astronaut candidate with Titans Space Industries.",
   },
   {
     question: "Where is ASTHERA based?",
     answer:
-      "ASTHERA is based in Kaduna, Kaduna State, Nigeria, and works with schools, universities and communities across the country.",
+      "ASTHERA is based in Kaduna, Kaduna State, Nigeria, and works on challenges across Nigeria and the wider African continent.",
   },
   {
     question: "How can an organisation work with ASTHERA?",
     answer:
-      "Institutions, funders and universities can start a conversation through the partnership page on astheraspace.com. ASTHERA works on programme funding, research collaboration, equipment and school outreach partnerships.",
+      "Government bodies, universities, research organisations, companies, NGOs and international organisations can start a conversation through the partnership page. Work ranges from intelligence projects and technical support to research collaboration and education programmes.",
   },
 ];
 
-export default async function AboutPage() {
-  const programmes = await getProgrammes();
-
+export default function AboutPage() {
   return (
     <>
       <JsonLd data={breadcrumbGraph([{ name: "About", path: "/about" }])} />
@@ -55,155 +82,180 @@ export default async function AboutPage() {
         badge="About us"
         title={
           <>
-            Africa is not short of <span className="accent-word">sky</span>.
+            Space technology, <span className="accent-word">read for the ground</span>.
           </>
         }
-        lede="ASTHERA is a space-tech and astronomy initiative based in Kaduna, northern Nigeria. We expand access to space and STEM education, and we put satellite and geospatial technology to work on environmental and agricultural systems across Africa."
+        lede="ASTHERA is a Nigerian space-technology and space-intelligence company. We turn satellite, Earth-observation and geospatial data into clear, practical intelligence for the challenges people face on the ground."
       />
 
       <Section>
         <Rail className="py-20 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-16">
-          <Reveal>
-            <div className="prose-asthera">
-              <p>
-                Nigeria has a space agency, a satellite programme and thousands of physics
-                graduates. What it does not have, in any quantity, is a route from a classroom in
-                Kaduna to work in space science. Astronomy is barely taught. Most students never
-                meet anyone who does this for a living. The talent is not missing. The door is.
-              </p>
+          <div className="grid gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-16">
+            <Reveal>
+              <div className="prose-asthera">
+                <p>
+                  Satellites pass over every river basin, farm and forest in Africa, again and
+                  again. Little of what they record reaches the people who could use it, and what
+                  does usually arrives as raw data that needs a specialist to read.
+                </p>
+                <p>
+                  ASTHERA closes that gap. We connect space technology with needs on the ground,
+                  especially environmental monitoring, climate resilience, flood risk and
+                  agriculture. We interpret space-derived information and translate it into
+                  intelligence that governments, institutions, businesses and communities can
+                  base decisions on.
+                </p>
 
-              <h2>What we work on</h2>
-              <p>
-                ASTHERA exists to build that door and then hold it open. We teach astronomy where it
-                is not taught. We put space science in front of students who have never been offered
-                it, with particular attention to girls in northern Nigeria. And we work on the
-                applied side, turning satellite and geospatial data into information that is useful
-                for flooding, farming, climate and security.
-              </p>
-              <p>
-                Those two halves are the same project. A country that can read its own satellite
-                data needs people trained to read it. Training those people is the long game, and
-                the applied work is what makes the case for it.
-              </p>
+                <h2>Vision</h2>
+                <p>
+                  To become a leading African space-intelligence company, using space technology,
+                  Earth observation and data innovation to address real-world challenges and
+                  contribute to sustainable development.
+                </p>
 
-              <h2>Why this, and why now</h2>
-              <p>
-                Space technology already answers questions Nigeria is asking. Where will the water
-                go. Which fields are failing. What changed on that ground between last season and
-                this one. Those answers currently arrive, when they arrive, from somewhere else.
-                Building the capability locally is cheaper, faster and more accountable than
-                importing it indefinitely.
-              </p>
-            </div>
-          </Reveal>
+                <h2>Mission</h2>
+                <p>
+                  To transform satellite and geospatial data into practical intelligence that helps
+                  organisations understand environmental and societal challenges, make informed
+                  decisions and build resilience, while developing the next generation of African
+                  space and technology talent.
+                </p>
+              </div>
+            </Reveal>
 
-          <MediaSlot
-            name="outreach-session"
-            alt="An ASTHERA outreach session with students"
-            brief="Students at an ASTHERA workshop or observation session. Faces engaged, real setting."
-            width={800}
-            height={1000}
-            sizes="(min-width: 1024px) 34vw, 100vw"
-            className="self-start"
-          />
-        </div>
-      </Rail>
+            <MediaSlot
+              name="about-fieldwork"
+              alt="ASTHERA analysing satellite imagery of a Nigerian landscape"
+              brief="The team at work: satellite imagery on screen, fieldwork, or a session with students. Real setting."
+              width={800}
+              height={1000}
+              sizes="(min-width: 1024px) 34vw, 100vw"
+              className="self-start"
+            />
+          </div>
+        </Rail>
       </Section>
 
       <Section tone="green" curve="tl-br">
         <Rail className="py-20 lg:py-28">
-        <Reveal className="max-w-[42rem]">
-          <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
-            The three programmes
-          </h2>
-          <p className="mt-5 leading-relaxed text-text-dim">
-            Each runs independently and feeds the others.
-          </p>
-        </Reveal>
+          <Reveal className="max-w-[42rem]">
+            <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
+              What we are working towards
+            </h2>
+          </Reveal>
 
-        <ul className="mt-12 grid">
-          {programmes.map((programme, index) => (
-            <Reveal as="li" key={programme.slug} delay={index * 0.06}>
-              <div className="grid gap-3 border-t border-line py-7 sm:grid-cols-[16rem_1fr] sm:gap-10">
-                <h3 className="text-xl tracking-tight text-text">{programme.name}</h3>
-                <p className="max-w-[62ch] leading-relaxed text-text-dim">{programme.summary}</p>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
+          <div className="mt-12 grid gap-10 lg:grid-cols-3 lg:gap-12">
+            {goals.map((group, index) => (
+              <Reveal key={group.heading} delay={index * 0.06}>
+                <h3 className="border-t border-text/15 pt-5 text-xl tracking-tight text-text">
+                  {group.heading}
+                </h3>
+                <ul className="mt-5 grid gap-4">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm leading-relaxed text-text-dim">
+                      <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-accent" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ))}
+          </div>
 
-        <div className="mt-12">
-          <Button href="/programmes" variant="secondary">
-            Programme detail
-          </Button>
-        </div>
-      </Rail>
+          <div className="mt-14">
+            <Button href="/work" variant="secondary">
+              See our work
+            </Button>
+          </div>
+        </Rail>
       </Section>
 
       <Section>
         <Rail className="py-20 lg:py-28">
-        <Reveal className="max-w-[42rem]">
-          <Badge>Positions</Badge>
-          <h2 className="mt-6 text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
-            Where we sit
-          </h2>
-          <p className="mt-5 leading-relaxed text-text-dim">
-            {founder.name} holds each of these positions. Listing them is not a claim that these
-            institutions endorse ASTHERA.
-          </p>
-        </Reveal>
-
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {affiliations.map((entry, index) => (
-            <Reveal as="li" key={entry.name} delay={index * 0.05}>
-              <div className="h-full rounded-card border border-line px-6 py-6">
-                <h3 className="text-base text-text">
-                  {entry.url ? (
-                    <a
-                      href={entry.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="underline decoration-line-strong underline-offset-4 transition-colors duration-200 hover:text-accent"
-                    >
-                      {entry.name}
-                    </a>
-                  ) : (
-                    entry.name
-                  )}
-                </h3>
-                <p className="mt-2 text-sm text-text-dim">{entry.relation}</p>
-              </div>
+          <div className="grid gap-14 lg:grid-cols-[0.8fr_1fr] lg:gap-16">
+            <Reveal>
+              <Badge>How we work</Badge>
+              <h2 className="mt-6 text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
+                Problem first, data second
+              </h2>
+              <p className="mt-5 max-w-[46ch] leading-relaxed text-text-dim">
+                We start by understanding the problem and who has to act on it. Only then do we
+                pick the data and the method. The output is judged by one test: is it useful to
+                the person it was made for?
+              </p>
             </Reveal>
-          ))}
-        </ul>
-      </Rail>
+
+            <ol className="divide-y divide-line overflow-hidden rounded-card border border-line">
+              {approach.map((step, index) => (
+                <Reveal as="li" key={step.title} delay={index * 0.05}>
+                  <div className="grid gap-1 px-6 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
+                    <span className="text-base text-text">{step.title}</span>
+                    <span className="text-sm leading-relaxed text-text-dim">{step.body}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+
+          <div className="mt-24">
+            <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
+              What we hold to
+            </h2>
+            <dl className="mt-12 grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+              {practices.map((practice, index) => (
+                <Reveal key={practice.title} delay={index * 0.04}>
+                  <dt className="text-lg tracking-tight text-text">{practice.title}</dt>
+                  <dd className="mt-2 max-w-[38ch] text-sm leading-relaxed text-text-dim">
+                    {practice.body}
+                  </dd>
+                </Reveal>
+              ))}
+            </dl>
+          </div>
+        </Rail>
       </Section>
 
-      <Section tone="navy-wash" curve="tr-bl">
+      <Section tone="gold" curve="tr-bl">
         <Rail className="py-20 lg:py-28">
-        <Reveal className="max-w-[42rem]">
-          <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
-            Common questions
-          </h2>
-        </Reveal>
+          <Reveal className="mx-auto max-w-[46rem] text-center">
+            <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
+              Where this is going
+            </h2>
+            <p className="mx-auto mt-6 max-w-[56ch] leading-relaxed text-text-dim">
+              ASTHERA is an early-stage company. Over time we intend to grow into a broader African
+              space-intelligence and innovation platform, adding technology products, research
+              capability, education programmes, partnerships and commercial services. The
+              principle stays the same: connect what we can see from space with what needs doing
+              on Earth.
+            </p>
+          </Reveal>
+        </Rail>
+      </Section>
 
-        <dl className="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-16">
-          {faqs.map((faq, index) => (
-            <Reveal key={faq.question} delay={index * 0.05}>
-              <dt className="text-lg tracking-tight text-text">{faq.question}</dt>
-              <dd className="mt-3 text-sm leading-relaxed text-text-dim">{faq.answer}</dd>
-            </Reveal>
-          ))}
-        </dl>
+      <Section tone="navy-wash" curve="tl-br">
+        <Rail className="py-20 lg:py-28">
+          <Reveal className="max-w-[42rem]">
+            <h2 className="text-balance text-4xl leading-[1.06] tracking-[-0.03em] text-text">
+              Common questions
+            </h2>
+          </Reveal>
 
-        <div className="mt-14 flex flex-wrap gap-3">
-          <Button href={cta.partner.href}>{cta.partner.label}</Button>
-          <Button href="/contact" variant="secondary">
-            Contact {site.name}
-          </Button>
-        </div>
-      </Rail>
+          <dl className="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-16">
+            {faqs.map((faq, index) => (
+              <Reveal key={faq.question} delay={index * 0.05}>
+                <dt className="text-lg tracking-tight text-text">{faq.question}</dt>
+                <dd className="mt-3 text-sm leading-relaxed text-text-dim">{faq.answer}</dd>
+              </Reveal>
+            ))}
+          </dl>
+
+          <div className="mt-14 flex flex-wrap gap-3">
+            <Button href={cta.partner.href}>{cta.partner.label}</Button>
+            <Button href="/contact" variant="secondary">
+              Contact {site.name}
+            </Button>
+          </div>
+        </Rail>
       </Section>
     </>
   );

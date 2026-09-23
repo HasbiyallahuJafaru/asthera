@@ -15,7 +15,7 @@ export const revalidate = 60;
 export const metadata: Metadata = pageMeta({
   title: "Journal",
   description:
-    "Mission updates, programme news and writing from ASTHERA and founder Fauziyya Auwal Muhammad, including the road to the 2026 LunAres analogue mission.",
+    "Project news, education programmes and writing from ASTHERA, the Nigerian space-intelligence company, and founder Fauziyya Auwal Muhammad.",
   path: "/journal",
 });
 
@@ -38,10 +38,10 @@ export default async function JournalPage() {
         badge="Journal"
         title={
           <>
-            Mission updates and <span className="accent-word">writing</span>.
+            News and <span className="accent-word">notes from the work</span>.
           </>
         }
-        lede="Training milestones, programme news and notes from the work. Subscribe and it comes to you instead."
+        lede="Project updates, programmes for young people, and what we learn along the way. Subscribe to get new posts by email."
       >
         <div className="max-w-md">
           <NewsletterForm source="journal" />

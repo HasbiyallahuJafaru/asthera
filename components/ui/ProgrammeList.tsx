@@ -11,7 +11,7 @@ type Entry = {
 };
 
 /**
- * Programmes as an editorial list rather than a card grid.
+ * Areas of work as an editorial list rather than a card grid.
  *
  * Three columns of cards forced a 25 character measure, which broke every line
  * after three words and made the set read as generic feature tiles. Stacked
@@ -25,12 +25,12 @@ export function ProgrammeList({ programmes }: { programmes: Entry[] }) {
   return (
     <ol className="border-b border-text/15">
       {programmes.map((programme, index) => {
-        const src = resolveMedia(`programme-${programme.slug}`);
+        const src = resolveMedia(`work-${programme.slug}`);
 
         return (
           <Reveal as="li" key={programme.slug} delay={index * 0.09} className="border-t border-text/15">
             <Link
-              href={`/programmes/${programme.slug}`}
+              href={`/work/${programme.slug}`}
               /* Every second entry is indented, so the column edge is not a
                  straight rule down the page. */
               className={`group grid gap-x-8 gap-y-5 py-9 transition-colors duration-300 sm:grid-cols-[2.5rem_1fr_auto] lg:py-12 ${
@@ -74,7 +74,7 @@ export function ProgrammeList({ programmes }: { programmes: Entry[] }) {
                 </div>
               ) : (
                 <span className="hidden self-start font-mono text-[10px] leading-relaxed text-text-faint sm:block sm:w-[11rem] lg:w-[14rem]">
-                  media/programme-{programme.slug}.jpg
+                  media/work-{programme.slug}.jpg
                 </span>
               )}
             </Link>

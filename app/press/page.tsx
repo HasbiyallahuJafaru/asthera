@@ -23,18 +23,19 @@ export const metadata: Metadata = pageMeta({
 
 const bios = {
   short:
-    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist, astronaut candidate with Titans Space Industries, and founder of ASTHERA, a space-tech and astronomy initiative based in Kaduna.",
+    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist, astronaut candidate with Titans Space Industries, and founder of ASTHERA, a space-intelligence company based in Kaduna.",
   medium:
-    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist and founder of ASTHERA, a space-tech and astronomy initiative advancing astronomy education, STEM outreach and applied satellite technology across Africa. A Graduate Assistant in the Department of Physics at Kaduna State University, she is an astronaut candidate with Titans Space Industries and was selected for the 2026 LunAres Research Station analogue mission in Poland.",
+    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist and founder of ASTHERA, a space-intelligence company that turns satellite and geospatial data into practical intelligence for flood risk, agriculture and climate, and runs STEM and space education for young Africans. A Graduate Assistant in the Department of Physics at Kaduna State University, she is an astronaut candidate with Titans Space Industries and was selected for the 2026 LunAres Research Station analogue mission in Poland.",
   long:
-    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist, space advocate and founder of ASTHERA, a space-tech and astronomy initiative dedicated to astronomy education, STEM outreach and the application of satellite and geospatial technology to challenges across Africa. Born in Igabi Local Government Area of Kaduna State, she took a first-class degree in physics at Kaduna State University, where she is now a Graduate Assistant while completing a master's specialising in astrophysics and space science education. In 2024 she presented research on external galaxies at an international astronomy and astrophysics conference and won an astronomy and astrophysics competition. Her paper on astronomy outreach in Nigeria, Stellar Horizons, is indexed on NASA ADS. She is an astronaut candidate with Titans Space Industries, reported as Nigeria's first, and was selected for the 2026 LunAres Research Station analogue mission in Poland, reported as Nigeria's first female analogue astronaut. In September 2026 she was named a beneficiary of the Kaduna State Government innovator fund. Her stated goal is to establish an astronomy department at Kaduna State University.",
+    "Fauziyya Auwal Muhammad is a Nigerian astrophysicist, space advocate and founder of ASTHERA, a Nigerian space-intelligence company that turns satellite, Earth-observation and geospatial data into decision-ready intelligence and develops young African talent in space and technology. Born in Igabi Local Government Area of Kaduna State, she took a first-class degree in physics at Kaduna State University, where she is now a Graduate Assistant while completing a master's specialising in astrophysics and space science education. In 2024 she presented research on external galaxies at an international astronomy and astrophysics conference and won an astronomy and astrophysics competition. Her paper on astronomy outreach in Nigeria, Stellar Horizons, is indexed on NASA ADS. She is an astronaut candidate with Titans Space Industries, reported as Nigeria's first, and was selected for the 2026 LunAres Research Station analogue mission in Poland, reported as Nigeria's first female analogue astronaut. In September 2026 she was named a beneficiary of the Kaduna State Government innovator fund. Her stated goal is to establish an astronomy department at Kaduna State University.",
 };
 
 const factSheet = [
-  { term: "Organisation", value: "ASTHERA" },
+  { term: "Organisation", value: "ASTHERA, a space-intelligence company" },
+  { term: "Tagline", value: "Bridging the stars and the soil" },
   { term: "Founder and Chief Executive", value: founder.name },
   { term: "Based in", value: `${site.city}, ${site.region}, ${site.country}` },
-  { term: "Focus", value: "Astronomy education, STEM outreach, applied space technology" },
+  { term: "What it does", value: "Space intelligence, Earth observation, STEM education" },
   {
     term: "Founder's position",
     value: "Graduate Assistant, Department of Physics, Kaduna State University",

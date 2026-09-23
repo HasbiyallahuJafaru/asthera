@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/primitives/breadcrumb";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -31,7 +40,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return pageMeta({
     title: programme.name,
     description: programme.summary,
-    path: `/programmes/${programme.slug}`,
+    path: `/work/${programme.slug}`,
   });
 }
 
@@ -46,8 +55,8 @@ export default async function ProgrammePage({ params }: Params) {
     <>
       <JsonLd
         data={breadcrumbGraph([
-          { name: "Programmes", path: "/programmes" },
-          { name: programme.name, path: `/programmes/${programme.slug}` },
+          { name: "Our work", path: "/work" },
+          { name: programme.name, path: `/work/${programme.slug}` },
         ])}
       />
 
@@ -55,7 +64,21 @@ export default async function ProgrammePage({ params }: Params) {
         <Rail className="py-16 lg:py-24">
         <article>
           <div className="mx-auto max-w-[46rem]">
-            <Badge>Programme</Badge>
+            <Breadcrumb className="mb-7">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/work">Our work</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{programme.name}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+
+            <Badge>Our work</Badge>
             <h1 className="mt-6 text-balance text-[2.5rem] leading-[1.04] tracking-[-0.03em] text-text sm:text-5xl">
               {programme.name}
             </h1>
@@ -63,9 +86,9 @@ export default async function ProgrammePage({ params }: Params) {
           </div>
 
           <MediaSlot
-            name={`programme-${programme.slug}`}
+            name={`work-${programme.slug}`}
             alt={programme.name}
-            brief="Lead image for this programme page. Landscape, from a real session."
+            brief="Lead image for this area of work. Landscape: satellite imagery, fieldwork or a real session."
             width={1400}
             height={800}
             sizes="(min-width: 1480px) 1300px, 100vw"
@@ -83,7 +106,7 @@ export default async function ProgrammePage({ params }: Params) {
 
             {programme.outcomes.length > 0 ? (
               <Reveal className="mt-14 rounded-card bg-surface p-7 sm:p-9">
-                <h2 className="text-lg tracking-tight text-text">What this delivers</h2>
+                <h2 className="text-lg tracking-tight text-text">What this covers</h2>
                 <ul className="mt-5 grid gap-3">
                   {programme.outcomes.map((outcome) => (
                     <li key={outcome} className="flex gap-3 text-sm leading-relaxed text-text-dim">
@@ -97,8 +120,8 @@ export default async function ProgrammePage({ params }: Params) {
 
             <div className="mt-14 flex flex-wrap gap-3">
               <Button href={cta.partner.href}>{cta.partner.label}</Button>
-              <Button href="/programmes" variant="secondary">
-                All programmes
+              <Button href="/work" variant="secondary">
+                All our work
               </Button>
             </div>
           </div>

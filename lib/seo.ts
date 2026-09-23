@@ -98,10 +98,12 @@ export function organisationGraph() {
           addressCountry: "NG",
         },
         knowsAbout: [
-          "Astronomy education",
-          "STEM outreach",
-          "Satellite and geospatial technology",
-          "Space science in Africa",
+          "Earth observation",
+          "Geospatial analysis",
+          "Flood-risk intelligence",
+          "Agricultural intelligence",
+          "Environmental monitoring",
+          "STEM and space education",
         ],
       },
       {

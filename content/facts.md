@@ -8,6 +8,19 @@ Last verified: 2026-09-21
 
 ---
 
+## 0. Company profile (client-supplied, authoritative for positioning)
+
+`asthera.md` in the repo root is the company profile supplied by ASTHERA. It is
+the source for the company's description, vision, mission, goals, areas of work,
+services, method and practices, and it supersedes the "initiative" framing in
+section 1 below. It contains no dates, figures or named partners, so section 5
+still applies.
+
+**Tagline:** Bridging the Stars and the Soil
+**Positioning:** a Nigerian space-technology and space-intelligence company
+
+---
+
 ## 1. The organisation
 
 **Name:** ASTHERA

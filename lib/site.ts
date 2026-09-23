@@ -1,8 +1,8 @@
 /**
  * Site-wide constants.
  *
- * Every factual string here traces back to content/facts.md. Do not add a claim
- * that is not recorded and sourced in that file.
+ * Every factual string here traces back to content/facts.md or the company
+ * profile in asthera.md. Do not add a claim that is not recorded in one of them.
  *
  * Copy rule: no em-dash characters in any user-visible string.
  */
@@ -16,11 +16,11 @@ export const site = {
   domain: "astheraspace.com",
   url: SITE_URL,
   locale: "en_NG",
-  tagline: "Using space data to solve Earth problems.",
+  tagline: "Bridging the stars and the soil.",
   description:
-    "ASTHERA is a Nigerian space-tech and astronomy initiative advancing astronomy education, STEM outreach, and satellite technology applied to Africa's climate, agriculture and security challenges.",
+    "ASTHERA is a Nigerian space-intelligence company. We turn satellite, Earth-observation and geospatial data into practical intelligence for flood risk, agriculture, climate and the environment, and we train young Africans in space science and technology.",
   shortDescription:
-    "A Nigerian space-tech and astronomy initiative founded by astronaut candidate Fauziyya Auwal Muhammad.",
+    "A Nigerian space-intelligence company turning satellite data into decisions on the ground.",
   city: "Kaduna",
   region: "Kaduna State",
   country: "Nigeria",
@@ -50,7 +50,7 @@ export const sameAs: string[] = [
 
 export const nav = [
   { href: "/about", label: "About" },
-  { href: "/programmes", label: "Programmes" },
+  { href: "/work", label: "Our work" },
   { href: "/founder", label: "Founder" },
   { href: "/journal", label: "Journal" },
   { href: "/press", label: "Press" },
@@ -202,6 +202,8 @@ export type VideoItem = {
   channel: string;
   channelUrl: string;
   poster: string;
+  /** Shorts are shot vertically and need a 9:16 frame rather than 16:9. */
+  orientation?: "landscape" | "portrait";
 };
 
 /** Broadcast interviews. Verified via the YouTube oEmbed endpoint. */
@@ -212,6 +214,38 @@ export const videos: VideoItem[] = [
     channel: "TrustTV News",
     channelUrl: "https://www.youtube.com/@TrustTVNews",
     poster: "/media/video-daybreak.jpg",
+  },
+  {
+    id: "vZ9n6T7bnKk",
+    // Title as published, less the emoji the channel ends it with.
+    title: "Meet Fauziyya Muhammad Auwal, From Kaduna. Nigeria's first astronaut candidate",
+    channel: "PAPShow",
+    channelUrl: "https://www.youtube.com/@papshowng",
+    poster: "/media/video-papshow.jpg",
+    orientation: "portrait",
+  },
+  {
+    id: "zA9b3mfNlSw",
+    title: "Meet Nigeria's First Astronaut Candidate | Fauziyyah Muhammad Auwal",
+    channel: "PAPShow",
+    channelUrl: "https://www.youtube.com/@papshowng",
+    poster: "/media/video-papshow-interview.jpg",
+  },
+  {
+    id: "53IDwWM2JO8",
+    title: "Meet Nigeria's First Female Astronaut Candidate | Fauziyya Muhammad, EP:1",
+    channel: "The Booming Boomer",
+    channelUrl: "https://www.youtube.com/@the_booming_boomer",
+    poster: "/media/video-boomer.jpg",
+  },
+  {
+    id: "wXNCsSbYwBU",
+    // Published with the singular "Titan", which the press page flags as the
+    // common misprint. Left as the channel wrote it.
+    title: "Meet Fauziyya, Nigeria's first female space explorer selected by Titan Space Industries",
+    channel: "DRTV Nigeria",
+    channelUrl: "https://www.youtube.com/@drtvnigeria",
+    poster: "/media/video-drtv.jpg",
   },
 ];
 
@@ -294,45 +328,165 @@ export type Programme = {
   outcomes: string[];
 };
 
-/** Fallback programmes. Sanity `programme` documents override these. */
+/**
+ * The six areas of work from the company profile. Sanity `programme` documents
+ * override these once published; the type keeps its original name so the CMS
+ * schema does not have to change.
+ */
 export const programmes: Programme[] = [
   {
-    slug: "astronomy-education",
-    name: "Astronomy education",
+    slug: "space-intelligence",
+    name: "Space intelligence and Earth observation",
     summary:
-      "Bringing structured astronomy teaching into Nigerian classrooms and universities, where almost none currently exists.",
+      "Satellite and geospatial data, interpreted so it answers a specific question about the ground below.",
     detail:
-      "Nigeria produces physics graduates but has very few routes into astronomy and astrophysics. ASTHERA builds teaching material, runs observation sessions, and works toward a dedicated astronomy department at Kaduna State University so students no longer have to leave the country to study the sky.",
+      "Raw satellite imagery is rarely useful on its own. ASTHERA works from the question backwards: what changed, where, and what it means for the people who have to act. We use Earth-observation and geospatial data to build insight on environmental change, land and vegetation, climate risk and land use, and deliver it in a form an institution can use.",
     outcomes: [
-      "Curriculum and teaching material for secondary and undergraduate levels",
-      "Practical observation sessions with students",
-      "Groundwork for a dedicated astronomy department at KASU",
+      "Environmental change and land-use change",
+      "Vegetation and land conditions",
+      "Ecosystem monitoring",
+      "Climate and disaster-risk awareness",
     ],
   },
   {
-    slug: "stem-outreach",
-    name: "STEM outreach",
+    slug: "flood-climate-intelligence",
+    name: "Flood and climate intelligence",
     summary:
-      "Direct contact with students who have never met a scientist, with particular focus on girls in northern Nigeria.",
+      "Satellite, environmental and geospatial data combined to see flood and climate risk early enough to act on it.",
     detail:
-      "The gap is not talent, it is exposure. ASTHERA runs school visits, workshops and public sessions that put space science in front of young people in Kaduna and beyond, and that show girls a career in physics is reachable from where they already are.",
+      "ASTHERA is building the capability to combine satellite, environmental and geospatial data into a picture of where flood and climate risk is building. The long-term aim is early warning and early action: helping the institutions responsible identify areas at risk and make better preparedness and response decisions.",
     outcomes: [
-      "School and community workshops",
-      "Public astronomy sessions",
-      "Mentoring routes for girls entering physics",
+      "Flood-risk monitoring and mapping",
+      "Early-warning intelligence for responsible institutions",
+      "Climate-risk and resilience analysis",
     ],
   },
   {
-    slug: "applied-space-technology",
-    name: "Applied space technology",
+    slug: "agricultural-intelligence",
+    name: "Agricultural intelligence",
     summary:
-      "Using satellite and geospatial data against the problems Nigeria actually has: floods, farms, climate and security.",
+      "Crop, vegetation and land information from orbit, to support planning decisions on the farm and above it.",
     detail:
-      "Space assets are already overhead. ASTHERA works on turning satellite and geospatial data into usable information for climate monitoring, agricultural planning, flood management and security, so that the value of space technology is felt on the ground in African communities.",
+      "Satellites see every field, every season. ASTHERA explores how Earth-observation and geospatial technology can support agriculture: tracking vegetation and crop condition, flagging environmental and climate risks to production, and giving planners the land and climate information to base decisions on.",
     outcomes: [
-      "Climate and flood monitoring applications",
-      "Agricultural and environmental analysis",
-      "Geospatial capability building for local institutions",
+      "Vegetation monitoring and crop-condition assessment",
+      "Agricultural risk awareness",
+      "Land and climate information for planning",
+    ],
+  },
+  {
+    slug: "environmental-intelligence",
+    name: "Environmental intelligence",
+    summary:
+      "Land, water and vegetation monitored over time, so damage is seen while it can still be addressed.",
+    detail:
+      "Land degradation, water loss and unplanned urban growth build up slowly and are easy to miss from the ground. ASTHERA applies space and geospatial technology to monitor environmental conditions over time and make those changes visible to the people responsible for managing them.",
+    outcomes: [
+      "Vegetation change and land degradation",
+      "Water-related change",
+      "Urban growth and land-use change",
+      "Climate-related environmental risk",
+    ],
+  },
+  {
+    slug: "stem-space-education",
+    name: "STEM and space education",
+    summary:
+      "Astronomy, space science and satellite technology taught to young people as skills, not just inspiration.",
+    detail:
+      "ASTHERA runs education and outreach that introduces young people to astronomy, space science, Earth observation, satellite technology and data. The goal is not only to spark interest but to build practical skills and show clear routes into science and technology careers.",
+    outcomes: [
+      "Astronomy and space science sessions",
+      "Earth observation, satellite and data skills",
+      "Guidance on space careers and opportunities",
+    ],
+  },
+  {
+    slug: "youth-innovation",
+    name: "Youth development and innovation",
+    summary:
+      "Projects, mentorship and challenges that give young Africans a real way into space and technology.",
+    detail:
+      "Interest needs somewhere to go. ASTHERA creates opportunities for young people to take part in projects, volunteer programmes, mentorship, innovation challenges and hands-on learning, with a focus on those who have had the least access to space and technology. The aim is a generation able to build Africa's space and technology sector itself.",
+    outcomes: [
+      "Project and volunteer opportunities",
+      "Mentorship",
+      "Innovation challenges and practical learning",
     ],
   },
 ];
+
+/** Service lines from the company profile, grouped for the work page. */
+export const services = [
+  {
+    group: "Intelligence",
+    items: [
+      "Earth-observation and satellite-data applications",
+      "Geospatial and GIS analysis",
+      "Environmental monitoring",
+      "Flood-risk intelligence",
+      "Climate-risk and resilience intelligence",
+      "Agricultural intelligence",
+      "Data analysis and visualisation",
+    ],
+  },
+  {
+    group: "Education",
+    items: [
+      "Space and STEM education",
+      "Astronomy and space outreach",
+      "Technical training and workshops",
+      "Youth innovation and capacity building",
+    ],
+  },
+  {
+    group: "Research and partnerships",
+    items: [
+      "Research and innovation projects",
+      "Space-technology project development",
+      "Technical support for government and institutions",
+      "Research and technology partnerships",
+    ],
+  },
+] as const;
+
+/** The problem-first method, in order. */
+export const approach = [
+  { title: "The problem", body: "Start from a real challenge and the people who have to act on it." },
+  { title: "The data", body: "Choose the satellite, geospatial and environmental data that fits." },
+  { title: "Analysis", body: "Process and interpret it with scientifically sound methods." },
+  { title: "Intelligence", body: "Turn the result into findings a non-specialist can read." },
+  { title: "Decision support", body: "Deliver it in a form that supports a real decision." },
+] as const;
+
+/** How ASTHERA works, from the company profile. */
+export const practices = [
+  {
+    title: "Scientific integrity",
+    body: "Sound methods, and no reading of the data beyond what it shows.",
+  },
+  {
+    title: "Responsible technology",
+    body: "Weighing the social, environmental and ethical effects of what we build.",
+  },
+  {
+    title: "Collaboration",
+    body: "Working with experts and institutions across disciplines, not alone.",
+  },
+  {
+    title: "Innovation",
+    body: "Using emerging technology where it solves a real problem.",
+  },
+  {
+    title: "Impact",
+    body: "Prioritising work with measurable value for communities and decision-makers.",
+  },
+  {
+    title: "Inclusion",
+    body: "Opening doors for young people with the least access to space and technology.",
+  },
+  {
+    title: "Continuous learning",
+    body: "Testing, validating and refining every solution as we go.",
+  },
+] as const;

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Toaster } from "@/components/primitives/sonner";
+import { TooltipProvider } from "@/components/primitives/tooltip";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { organisationGraph } from "@/lib/seo";
@@ -23,7 +25,7 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ASTHERA | Space science built in Africa, for Africa",
+    default: "ASTHERA | Bridging the stars and the soil",
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -32,10 +34,11 @@ export const metadata: Metadata = {
     "ASTHERA",
     "Asthera Space",
     "Fauziyya Auwal Muhammad",
-    "Nigerian astronaut candidate",
-    "astronomy education Nigeria",
-    "STEM outreach Kaduna",
-    "space technology Africa",
+    "space intelligence Nigeria",
+    "Earth observation Africa",
+    "flood risk intelligence",
+    "geospatial analysis Nigeria",
+    "STEM education Kaduna",
   ],
   authors: [{ name: site.name, url: SITE_URL }],
   creator: site.name,
@@ -79,20 +82,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-[100dvh] antialiased">
         <JsonLd data={organisationGraph()} />
 
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-card focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-on-accent"
-        >
-          Skip to content
-        </a>
+        <TooltipProvider delayDuration={250}>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-card focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-on-accent"
+          >
+            Skip to content
+          </a>
 
-        <SiteHeader />
+          <SiteHeader />
 
-        <main id="main" className="relative z-10">
-          {children}
-        </main>
+          <main id="main" className="relative z-10">
+            {children}
+          </main>
 
-        <SiteFooter />
+          <SiteFooter />
+        </TooltipProvider>
+
+        <Toaster />
       </body>
     </html>
   );

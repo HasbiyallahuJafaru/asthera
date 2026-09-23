@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/primitives/breadcrumb";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { NewsletterForm } from "@/components/site/NewsletterForm";
 import { Button } from "@/components/ui/Button";
@@ -67,6 +76,22 @@ export default async function PostPage({ params }: Params) {
         <Rail className="py-16 lg:py-24">
         <article>
           <div className="mx-auto max-w-[46rem]">
+            <Breadcrumb className="mb-7">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/journal">Journal</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="max-w-[14rem] truncate sm:max-w-[22rem]">
+                    {post.title}
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+
             <time
               dateTime={post.publishedAt}
               className="text-[11px] font-medium uppercase tracking-[0.14em] text-accent"

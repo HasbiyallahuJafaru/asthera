@@ -2,6 +2,7 @@
 
 import { ArrowRight, CheckCircle, CircleNotch } from "@phosphor-icons/react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type State = "idle" | "sending" | "done" | "error";
 
@@ -37,15 +38,18 @@ export function NewsletterForm({ source = "site" }: { source?: string }) {
       if (!response.ok) {
         setState("error");
         setMessage(body.message ?? "That did not go through. Please try again.");
+        toast.error(body.message ?? "That did not go through. Please try again.");
         return;
       }
 
       setState("done");
       setMessage(body.message ?? "You are on the list.");
+      toast.success(body.message ?? "You are on the list.");
       form.reset();
     } catch {
       setState("error");
       setMessage("Network error. Please try again.");
+      toast.error("Network error. Please try again.");
     }
   }
 

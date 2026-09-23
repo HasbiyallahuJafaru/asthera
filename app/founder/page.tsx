@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { Cite } from "@/components/ui/Cite";
 import { MediaSlot } from "@/components/ui/MediaSlot";
 import { Reveal } from "@/components/ui/Reveal";
-import { VideoEmbed } from "@/components/ui/VideoEmbed";
 import { Rail, Section } from "@/components/ui/Section";
+import { VideoSet } from "@/components/ui/VideoSet";
 import { breadcrumbGraph, pageMeta, videoGraph } from "@/lib/seo";
 import { affiliations, citations, cta, founder, videos } from "@/lib/site";
 import { getMilestones } from "@/sanity/queries";
@@ -76,8 +76,9 @@ export default async function FounderPage() {
             </h1>
 
             <p className="mt-7 max-w-[50ch] text-lg leading-relaxed text-text-dim">
-              Astrophysicist, astronaut candidate, and founder of ASTHERA. She is building the route
-              into space science that she had to improvise for herself.
+              Astrophysicist, astronaut candidate, and founder of ASTHERA, the Nigerian
+              space-intelligence company. She had to improvise her own route into space science,
+              and she is building a better one for the students behind her.
             </p>
 
             <ul className="mt-8 grid gap-2.5">
@@ -98,13 +99,14 @@ export default async function FounderPage() {
 
           <MediaSlot
             name="fauziyya-founder-hero"
-            alt={`${founder.name}, founder of ASTHERA`}
-            brief="Second portrait, different from the homepage image."
-            width={900}
-            height={1000}
+            alt={`${founder.name}, founder of ASTHERA, in a flight suit`}
+            brief="Studio portrait of the founder."
+            width={1097}
+            height={1434}
             priority
             sizes="(min-width: 1024px) 46vw, 100vw"
             className="min-h-[420px]"
+            imageClassName="object-[50%_22%]"
             rounded={false}
           />
         </div>
@@ -146,11 +148,12 @@ export default async function FounderPage() {
 
               <h2>Why ASTHERA exists</h2>
               <p>
-                She founded ASTHERA to apply space science to Nigeria&apos;s actual problems,
-                climate, agriculture, flood management and security, and to make astronomy teachable
-                here. Her stated goal is to establish an astronomy department at Kaduna State
-                University so the next student does not have to assemble the subject alone from the
-                internet.
+                She founded ASTHERA as a space-intelligence company: one that turns satellite and
+                geospatial data into practical intelligence on flood risk, agriculture, climate
+                and the environment, and that trains the young Africans who will do that work
+                next. Alongside it, her stated goal is to establish an astronomy department at
+                Kaduna State University, so the next student does not have to piece the subject
+                together from the internet.
               </p>
 
               <blockquote>I want to come back and bring positive change to my society.</blockquote>
@@ -232,21 +235,19 @@ export default async function FounderPage() {
       {videos.length > 0 ? (
         <Section tone="green" curve="tl-br">
           <Rail width="wide" className="py-20 lg:py-28">
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
-              <Reveal variant="left" className="lg:col-span-4 lg:pt-8">
-                <Badge tone="page">In her own words</Badge>
-                <h2 className="mt-7 text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text">
-                  The <span className="accent-word">interview</span>.
-                </h2>
-                <p className="mt-6 max-w-[40ch] leading-relaxed text-text-dim">
-                  On her route into astronomy, mentorship, working in a male dominated field, and
-                  what space science can do for Nigeria.
-                </p>
-              </Reveal>
+            <Reveal className="max-w-[46rem]">
+              <Badge tone="page">In her own words</Badge>
+              <h2 className="mt-7 text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text">
+                The <span className="accent-word">interviews</span>.
+              </h2>
+              <p className="mt-6 max-w-[54ch] leading-relaxed text-text-dim">
+                On her route into astronomy, mentorship, working in a male-dominated field, and
+                what space science can do for Nigeria.
+              </p>
+            </Reveal>
 
-              <Reveal variant="right" delay={0.1} className="lg:col-span-7 lg:col-start-6">
-                <VideoEmbed {...videos[0]} />
-              </Reveal>
+            <div className="mt-14">
+              <VideoSet videos={videos} />
             </div>
           </Rail>
         </Section>

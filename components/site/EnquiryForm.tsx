@@ -2,12 +2,22 @@
 
 import { CheckCircle, CircleNotch } from "@phosphor-icons/react";
 import { useState } from "react";
+import { toast } from "sonner";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/primitives/select";
 
 type State = "idle" | "sending" | "done" | "error";
 
 const topics = [
-  { value: "partnership", label: "Partnership or funding" },
-  { value: "programme", label: "Host a programme or workshop" },
+  { value: "project", label: "Intelligence or technical project" },
+  { value: "partnership", label: "Partnership, research or funding" },
+  { value: "programme", label: "Education session or workshop" },
   { value: "press", label: "Press or interview" },
   { value: "speaking", label: "Speaking request" },
   { value: "other", label: "Something else" },
@@ -20,6 +30,7 @@ const field =
 export function EnquiryForm({ defaultTopic = "partnership" }: { defaultTopic?: string }) {
   const [state, setState] = useState<State>("idle");
   const [message, setMessage] = useState("");
+  const [topic, setTopic] = useState(defaultTopic);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,15 +52,18 @@ export function EnquiryForm({ defaultTopic = "partnership" }: { defaultTopic?: s
       if (!response.ok) {
         setState("error");
         setMessage(body.message ?? "That did not send. Please try again.");
+        toast.error(body.message ?? "That did not send. Please try again.");
         return;
       }
 
       setState("done");
       setMessage(body.message ?? "Thank you. We will be in touch.");
       form.reset();
+      setTopic(defaultTopic);
     } catch {
       setState("error");
       setMessage("Network error. Please try again, or email us directly.");
+      toast.error("Network error. Please try again, or email us directly.");
     }
   }
 
@@ -101,13 +115,25 @@ export function EnquiryForm({ defaultTopic = "partnership" }: { defaultTopic?: s
         <label htmlFor="topic" className="text-sm text-text">
           What is this about
         </label>
-        <select id="topic" name="topic" defaultValue={defaultTopic} className={field}>
-          {topics.map((topic) => (
-            <option key={topic.value} value={topic.value}>
-              {topic.label}
-            </option>
-          ))}
-        </select>
+{/* Radix rather than a native select, whose option list the operating
+            system draws. Controlled, with the label passed to SelectValue and
+            the value carried by a hidden input: Radix registers both from the
+            items, and the items only mount once the menu opens, so left to
+            itself the trigger rendered blank and a form submitted without
+            touching the field sent no topic at all. */}
+        <Select value={topic} onValueChange={setTopic}>
+          <SelectTrigger id="topic">
+            <SelectValue>{topics.find((item) => item.value === topic)?.label}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {topics.map((topic) => (
+              <SelectItem key={topic.value} value={topic.value}>
+                {topic.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <input type="hidden" name="topic" value={topic} />
       </div>
 
       <div className="grid gap-2">

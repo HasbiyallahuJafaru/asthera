@@ -11,12 +11,12 @@ import { contact, site, socials } from "@/lib/site";
 export const metadata: Metadata = pageMeta({
   title: "Contact",
   description:
-    "Get in touch with ASTHERA in Kaduna, Nigeria, for partnerships, programme requests, press enquiries and speaking invitations.",
+    "Get in touch with ASTHERA in Kaduna, Nigeria, about intelligence projects, partnerships, education sessions, press and speaking.",
   path: "/contact",
 });
 
 const routes = [
-  { label: "Partnerships and funding", email: contact.partnerships },
+  { label: "Projects, partnerships and funding", email: contact.partnerships },
   { label: "Press and interviews", email: contact.press },
   { label: "Everything else", email: contact.general },
 ];
@@ -33,7 +33,7 @@ export default function ContactPage() {
             Get in <span className="accent-word">touch</span>.
           </>
         }
-        lede="ASTHERA is a small team based in Kaduna. Messages reach the founder directly."
+        lede="ASTHERA is based in Kaduna, Nigeria. Messages go straight to the team."
       />
 
       <Section>

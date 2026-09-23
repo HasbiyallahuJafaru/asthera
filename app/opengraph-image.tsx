@@ -76,7 +76,7 @@ export default function OpengraphImage() {
           </div>
 
           <div style={{ display: "flex", fontSize: 26, color: "#545e66", maxWidth: 860 }}>
-            Astronomy education, STEM outreach and applied satellite technology across Africa.
+            Satellite and geospatial intelligence for flood risk, agriculture and climate in Africa.
           </div>
         </div>
 

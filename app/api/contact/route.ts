@@ -11,6 +11,7 @@ const FROM = process.env.CONTACT_FROM_EMAIL ?? "ASTHERA site <onboarding@resend.
 const resend = RESEND_KEY ? new Resend(RESEND_KEY) : null;
 
 const ROUTING: Record<string, string> = {
+  project: contact.partnerships,
   partnership: contact.partnerships,
   programme: contact.partnerships,
   press: contact.press,

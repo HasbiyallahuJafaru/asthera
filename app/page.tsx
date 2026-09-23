@@ -1,67 +1,42 @@
 import {
+  ArrowDown,
   ArrowRight,
   ChalkboardTeacher,
   MoonStars,
   Rocket,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
+import { Bodoni_Moda } from "next/font/google";
 import Link from "next/link";
 
 import { NewsletterForm } from "@/components/site/NewsletterForm";
+import { PressMarquee } from "@/components/site/PressMarquee";
+import { EarthHero } from "@/components/site/EarthHero";
 import { Badge } from "@/components/ui/Badge";
 import { Button, TextLink } from "@/components/ui/Button";
-import { Cite } from "@/components/ui/Cite";
 import { MediaSlot } from "@/components/ui/MediaSlot";
 import { ProgrammeList } from "@/components/ui/ProgrammeList";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rail, Section } from "@/components/ui/Section";
 import { pageMeta } from "@/lib/seo";
-import { citations, cta, founder, site } from "@/lib/site";
-import { getMilestones, getPosts, getProgrammes } from "@/sanity/queries";
+import { approach, cta, founder, practices } from "@/lib/site";
+import { getPosts, getProgrammes } from "@/sanity/queries";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = pageMeta({
-  title: "ASTHERA | Using space data to solve Earth problems",
-  description:
-    "ASTHERA is a Nigerian space-tech and astronomy initiative founded by astronaut candidate Fauziyya Auwal Muhammad. Astronomy education, STEM outreach, and satellite technology applied to Africa's climate, agriculture and security.",
-  path: "/",
+/** The hero's display face: a high-contrast Didone, used only in the hero. */
+const display = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
-/**
- * Sourced standing. Column spans are deliberately unequal and each item sits on
- * its own baseline, so the row reads as set rather than as a four-up grid.
- */
-const standing = [
-  {
-    figure: "First",
-    label: "Nigerian astronaut candidate",
-    citation: citations.firstCandidate,
-    span: "lg:col-span-4",
-    shift: "",
-  },
-  {
-    figure: "First",
-    label: "Nigerian woman as analogue astronaut",
-    citation: citations.analogueAstronaut,
-    span: "lg:col-span-3",
-    shift: "lg:translate-y-8",
-  },
-  {
-    figure: "2026",
-    label: "LunAres mission, Poland",
-    citation: citations.analogueAstronaut,
-    span: "lg:col-span-2",
-    shift: "lg:-translate-y-3",
-  },
-  {
-    figure: "Funded",
-    label: "Kaduna State innovator fund",
-    citation: citations.grant,
-    span: "lg:col-span-3",
-    shift: "lg:translate-y-5",
-  },
-];
+export const metadata: Metadata = pageMeta({
+  title: "ASTHERA | Bridging the stars and the soil",
+  description:
+    "ASTHERA is a Nigerian space-intelligence company turning satellite, Earth-observation and geospatial data into practical intelligence for flood risk, agriculture, climate and the environment.",
+  path: "/",
+});
 
 const positions = [
   {
@@ -103,150 +78,95 @@ const reportedBy = [
 ];
 
 export default async function HomePage() {
-  const [programmes, milestones, posts] = await Promise.all([
-    getProgrammes(),
-    getMilestones(),
-    getPosts(3),
-  ]);
-
-  const recent = [...milestones].reverse().slice(0, 3);
+  const [programmes, posts] = await Promise.all([getProgrammes(), getPosts(3)]);
 
   return (
     <>
-      {/* Hero. Copy holds 7 of 12 columns on the left; the portrait hangs lower
-          and runs past the rail on the right. */}
-      <Section arc={{ x: 80, y: 16, rx: 44, ry: 27, rotate: -17, colour: "gold", opacity: 0.55 }}>
-        <Rail width="wide" className="pt-8 pb-20 lg:pt-12 lg:pb-28">
-          <div className="grid items-start gap-y-14 lg:grid-cols-12 lg:gap-x-10">
-            <div className="lg:col-span-7 lg:pt-6">
-              <Reveal variant="fade">
-                <Badge icon={Rocket}>{site.tagline}</Badge>
-              </Reveal>
+      {/* The hero: the site opens on the planet the work serves. A live 3D
+          Earth rises out of the bottom of the frame with West Africa turned to
+          the viewer, Mercury and Mars sit half cropped at the edges, and the
+          copy is set into the sky above them. */}
+      <section
+        id="hero"
+        className="relative isolate -mt-[77px] overflow-hidden bg-[#04070d] pt-[77px] text-on-navy"
+      >
+        <EarthHero className="absolute inset-0" labelClassName={display.className} />
 
-              <Reveal delay={0.06}>
-                <h1 className="mt-7 max-w-[15ch] text-[2.75rem] leading-[0.98] tracking-[-0.035em] text-text sm:text-[3.75rem] lg:text-[4.75rem]">
-                  Space science, <span className="accent-word">built here</span>.
-                </h1>
-              </Reveal>
+        <Rail
+          width="wide"
+          className="relative z-10 flex min-h-[calc(100dvh-77px)] flex-col items-center pb-40 pt-[clamp(3.5rem,11vh,6rem)] text-center"
+        >
+          <Reveal variant="fade" duration={1.1}>
+            <h1 className={`${display.className} flex flex-col items-center`}>
+              <span className="text-[clamp(0.8rem,1.1vw,1rem)] uppercase tracking-[0.5em] text-white/85 [margin-right:-0.5em]">
+                Bridging the stars
+              </span>
+              <span className="mt-3 text-[clamp(2.75rem,7.6vw,6rem)] font-normal uppercase leading-[0.95] tracking-[0.04em] text-white">
+                and the soil
+              </span>
+            </h1>
+          </Reveal>
 
-              <Reveal delay={0.12}>
-                <p className="mt-8 max-w-[42ch] text-lg leading-relaxed text-text-dim lg:ml-14">
-                  ASTHERA brings astronomy into Nigerian classrooms and turns satellite data into
-                  answers for flooding, farming and climate.
-                </p>
-              </Reveal>
+          <Reveal variant="fade" delay={0.25} duration={1.1}>
+            <span aria-hidden className="mt-7 block h-px w-28 bg-gold/80" />
+          </Reveal>
 
-              <Reveal delay={0.18}>
-                <div className="mt-10 max-w-md lg:ml-14">
-                  <NewsletterForm source="hero" />
-                </div>
-              </Reveal>
+          <Reveal delay={0.35}>
+            <p className="mx-auto mt-7 max-w-[46ch] text-[15px] leading-relaxed text-white/75">
+              ASTHERA turns satellite and Earth-observation data into decision-ready intelligence
+              for flood risk, farming and climate across Africa.
+            </p>
+          </Reveal>
 
-              <Reveal delay={0.24}>
-                <p className="mt-6 text-sm text-text-faint lg:ml-14">
-                  Reported by{" "}
-                  {reportedBy.slice(0, 3).map((item, index) => (
-                    <span key={item.url}>
-                      {index > 0 ? ", " : ""}
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="text-text-dim underline decoration-gold decoration-2 underline-offset-4 transition-colors duration-200 hover:text-accent"
-                      >
-                        {item.outlet}
-                      </a>
-                    </span>
-                  ))}{" "}
-                  and others.
-                </p>
-              </Reveal>
-            </div>
-
-            {/* Portrait: pushed down, past the rail, curved on one diagonal. */}
-            <div className="relative lg:col-span-5 lg:pt-24">
-              <Reveal variant="rise" delay={0.1}>
-                <MediaSlot
-                  name="fauziyya-portrait"
-                  alt={`${founder.name}, founder of ASTHERA`}
-                  brief="Portrait of Fauziyya, ideally in flight suit or lab setting. The single most important image on the site."
-                  width={900}
-                  height={1120}
-                  priority
-                  sizes="(min-width: 1024px) 42vw, 100vw"
-                  rounded={false}
-                  className="rounded-tl-band rounded-br-band lg:-mr-12 xl:-mr-20"
-                />
-              </Reveal>
-
-              {/* One card breaks out over the image edge. */}
-              <Reveal variant="left" delay={0.45}>
-                <div className="mt-4 flex items-start gap-3 rounded-card bg-page p-4 shadow-[0_14px_44px_rgba(16,28,46,0.13)] lg:absolute lg:bottom-10 lg:-left-16 lg:mt-0 lg:w-[19rem] xl:-left-24">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-accent-soft text-accent">
-                    <MoonStars size={20} />
-                  </span>
-                  <div>
-                    <p className="text-sm font-medium text-text">LunAres 2026</p>
-                    <p className="mt-0.5 text-sm leading-snug text-text-dim">
-                      Analogue mission, Poland.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-
-          {/* Standing: unequal spans, each on its own baseline. */}
-          <ul className="mt-20 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:mt-28 lg:grid-cols-12">
-            {standing.map((item, index) => (
-              <Reveal
-                as="li"
-                key={item.label}
-                delay={index * 0.07}
-                className={`${item.span} ${item.shift}`}
-              >
-                <p className="text-[2.5rem] leading-none tracking-[-0.03em] text-navy">
-                  {item.figure}
-                </p>
-                <span aria-hidden className="mt-4 block h-px w-10 bg-gold" />
-                <p className="mt-4 text-sm leading-snug text-text-dim">{item.label}</p>
-                <div className="mt-2.5">
-                  <Cite citation={item.citation} />
-                </div>
-              </Reveal>
-            ))}
-          </ul>
+          {/* One route in, pointing at the work. */}
+          <Reveal delay={0.45}>
+            <Button
+              href="/work"
+              variant="on-navy"
+              className="mt-9 px-7 py-2.5 text-[12px] uppercase tracking-[0.16em] shadow-[0_10px_30px_-10px_rgba(120,170,255,0.45)]"
+            >
+              See our work
+            </Button>
+          </Reveal>
         </Rail>
-      </Section>
 
-      {/* Mission. Heading holds the left third; programmes run as an editorial
-          list down the right, alternately indented. */}
+        <a
+          href="#work"
+          aria-label="Scroll to our work"
+          className="absolute bottom-6 left-1/2 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-pill border border-white/15 bg-[#04070d]/55 text-white/80 backdrop-blur-md transition-[border-color,color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-gold/70 hover:text-gold"
+        >
+          <ArrowDown size={16} weight="regular" aria-hidden />
+        </a>
+      </section>
+
+      {/* What we do. Heading holds the left third; the six areas run as an
+          editorial list down the right, alternately indented. */}
       <Section
+        id="work"
         tone="green"
-        curve="tl-br"
         arc={{ x: 14, y: 78, rx: 38, ry: 26, rotate: 24, colour: "green", opacity: 0.25 }}
-        className="mt-10"
+        className="rounded-br-band"
       >
         <Rail width="wide" className="py-24 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-10">
             <div className="lg:col-span-4">
               <Reveal variant="left">
-                <Badge tone="page">Our mission</Badge>
+                <Badge tone="page">What we do</Badge>
                 <h2 className="mt-7 text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
-                  We build the <span className="accent-word">route in</span>, not just the rocket.
+                  Intelligence, not <span className="accent-word">raw data</span>.
                 </h2>
                 <p className="mt-7 max-w-[42ch] leading-relaxed text-text-dim">
-                  Nigeria has physics graduates, a space agency and satellites overhead. What it
-                  does not have is a path from a classroom in Kaduna into space science. These
-                  three programmes build it.
+                  Satellites already watch every flood plain and farm in Nigeria. ASTHERA reads that
+                  data, interprets it, and gives governments, institutions, businesses and
+                  communities something they can act on.
                 </p>
                 <div className="mt-9 flex flex-wrap gap-3">
-                  <Button href="/programmes">
-                    Explore programmes
+                  <Button href="/work">
+                    See our work
                     <ArrowRight size={16} weight="bold" />
                   </Button>
                   <Button href="/about" variant="secondary">
-                    Learn more
+                    About us
                   </Button>
                 </div>
               </Reveal>
@@ -259,33 +179,52 @@ export default async function HomePage() {
         </Rail>
       </Section>
 
+      {/* The method, read left to right as one line. */}
       <Section>
-        <Rail width="wide" className="py-16 lg:py-20">
-          <div className="flex flex-col gap-7 lg:flex-row lg:items-baseline lg:gap-14">
-            <h2 className="shrink-0 text-[11px] font-medium uppercase tracking-[0.2em] text-text-faint">
-              As reported in
+        <Rail width="wide" className="py-24 lg:py-32">
+          <Reveal className="max-w-[40rem]">
+            <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
+              We start on the <span className="accent-word">ground</span>.
             </h2>
-            <ul className="flex flex-wrap items-baseline gap-x-10 gap-y-4">
-              {reportedBy.map((item, index) => (
-                <li key={item.url}>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={`tracking-tight text-text-faint transition-colors duration-200 hover:text-navy ${
-                      index % 3 === 0 ? "text-xl" : "text-lg"
-                    }`}
-                  >
-                    {item.outlet}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-6 max-w-[52ch] leading-relaxed text-text-dim">
+              Every project begins with a real problem and the person who has to solve it. The
+              data comes second.
+            </p>
+          </Reveal>
+
+          <ol className="relative mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+            <span
+              aria-hidden
+              className="absolute top-[5px] right-0 left-0 hidden h-px bg-gradient-to-r from-accent via-gold to-navy lg:block"
+            />
+            {approach.map((step, index) => (
+              <Reveal as="li" key={step.title} delay={index * 0.08} className="relative">
+                <span
+                  aria-hidden
+                  className="relative block h-[11px] w-[11px] rounded-pill border-2 border-page bg-accent ring-1 ring-accent"
+                />
+                <h3 className="mt-6 text-lg tracking-tight text-text">{step.title}</h3>
+                <p className="mt-2 max-w-[28ch] text-sm leading-relaxed text-text-dim">
+                  {step.body}
+                </p>
+              </Reveal>
+            ))}
+          </ol>
+        </Rail>
+      </Section>
+
+      <Section>
+        <Rail width="wide" className="pb-16 lg:pb-20">
+          <div className="flex flex-col gap-7 border-t border-line pt-14 lg:flex-row lg:items-center lg:gap-14">
+            <h2 className="shrink-0 text-sm text-text-faint">As reported in</h2>
+            <div className="min-w-0 flex-1">
+              <PressMarquee outlets={reportedBy} />
+            </div>
           </div>
         </Rail>
       </Section>
 
-      {/* Founder. Image left and low, quote pulled out into the gutter. */}
+      {/* The people side of the work: education and youth, image right. */}
       <Section
         tone="navy-wash"
         curve="tr-bl"
@@ -293,22 +232,62 @@ export default async function HomePage() {
       >
         <Rail width="wide" className="py-24 lg:py-32">
           <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-x-12">
-            <Reveal variant="left" className="lg:col-span-5">
+            <Reveal variant="left" className="lg:col-span-6">
+              <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
+                Training the people who will <span className="accent-word">read the data</span>.
+              </h2>
+              <p className="mt-7 max-w-[54ch] leading-relaxed text-text-dim">
+                A country that relies on satellite intelligence needs people who can produce it.
+                ASTHERA teaches astronomy, space science, Earth observation and data to young
+                people, and gives them projects, mentors and challenges to build real skills on.
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button href="/work/stem-space-education" variant="secondary">
+                  STEM and space education
+                </Button>
+                <Button href="/work/youth-innovation" variant="quiet">
+                  Youth and innovation
+                </Button>
+              </div>
+            </Reveal>
+
+            <Reveal variant="right" className="lg:col-span-5 lg:col-start-8">
               <MediaSlot
-                name="fauziyya-working"
-                alt={`${founder.name} at work`}
-                brief="Fauziyya teaching, presenting, or at a telescope. Working context rather than posed."
+                name="education-session"
+                alt="Young people at an ASTHERA education session"
+                brief="Students at an ASTHERA session: a workshop, an observation night or a data exercise. Real setting."
                 width={960}
                 height={1080}
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 rounded={false}
-                className="rounded-tr-band rounded-bl-band"
+                className="rounded-tl-band rounded-br-band"
+              />
+            </Reveal>
+          </div>
+        </Rail>
+      </Section>
+
+      {/* Leadership. Image left and low, quote pulled out into the gutter. */}
+      <Section arc={{ x: 16, y: 28, rx: 38, ry: 25, rotate: -21, colour: "green", opacity: 0.22 }}>
+        <Rail width="wide" className="py-24 lg:py-32">
+          <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-x-12">
+            <Reveal variant="left" className="lg:col-span-5">
+              <MediaSlot
+                name="fauziyya-working"
+                alt={`${founder.name} speaking in conversation`}
+                brief="Fauziyya teaching, presenting, or at a telescope. Working context rather than posed."
+                width={1080}
+                height={1675}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                rounded={false}
+                className="aspect-[4/5] rounded-tr-band rounded-bl-band"
+                imageClassName="object-[50%_32%]"
               />
             </Reveal>
 
             <Reveal variant="right" className="lg:col-span-6 lg:col-start-7">
               <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
-                The founder
+                Led by a physicist
               </h2>
 
               <blockquote className="mt-8 border-l-2 border-gold pl-6 text-xl leading-snug text-text sm:text-2xl lg:-ml-14">
@@ -316,15 +295,15 @@ export default async function HomePage() {
               </blockquote>
 
               <p className="mt-8 max-w-[56ch] leading-relaxed text-text-dim">
-                {founder.name} is an astrophysicist from Igabi, Kaduna State. She took a first-class
-                degree in physics at Kaduna State University, where she now teaches while completing
-                a master&apos;s in astrophysics and space science education. She founded ASTHERA so
-                the route she is taking does not stay a one-off.
+                ASTHERA was founded by {founder.name}, a first-class physics graduate of Kaduna
+                State University, where she now teaches while completing a master&apos;s in
+                astrophysics and space science education. She is also an astronaut candidate with
+                Titans Space Industries.
               </p>
 
               <div className="mt-9">
                 <Button href="/founder" variant="secondary">
-                  Her full story
+                  About the founder
                   <ArrowRight size={16} weight="bold" />
                 </Button>
               </div>
@@ -347,7 +326,7 @@ export default async function HomePage() {
                 }
               >
                 <div className="flex h-full items-start gap-3.5">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-page text-accent">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-pill bg-surface text-accent">
                     <position.icon size={20} />
                   </span>
                   <div>
@@ -361,7 +340,7 @@ export default async function HomePage() {
         </Rail>
       </Section>
 
-      {/* The record, with the newsletter card offset against it. */}
+      {/* Practices, with the newsletter card offset against them. */}
       <Section
         tone="gold"
         curve="tl-br"
@@ -369,61 +348,35 @@ export default async function HomePage() {
       >
         <Rail width="wide" className="py-24 lg:py-32">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-x-10">
-            <Reveal variant="left" className="lg:col-span-3 lg:pt-6">
-              <Badge tone="page">The record</Badge>
-              <h2 className="mt-7 text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text">
-                Where the mission stands.
-              </h2>
-              <p className="mt-6 leading-relaxed text-text-dim">
-                Every milestone links to the reporting it comes from.
-              </p>
-              <div className="mt-6">
-                <TextLink href="/founder">Full record</TextLink>
-              </div>
-            </Reveal>
+            <div className="lg:col-span-8">
+              <Reveal variant="left">
+                <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
+                  What we hold to
+                </h2>
+              </Reveal>
 
-            <div className="grid gap-5 sm:grid-cols-3 lg:col-span-6 lg:col-start-5">
-              {recent.map((milestone, index) => (
-                <Reveal
-                  key={milestone.title}
-                  variant="rise"
-                  delay={index * 0.09}
-                  className={
-                    index === 1 ? "sm:translate-y-10" : index === 2 ? "sm:translate-y-3" : ""
-                  }
-                >
-                  <div className="flex h-full flex-col rounded-card bg-page p-6">
-                    <span className="inline-flex w-fit rounded-pill bg-wash-gold px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-gold-deep">
-                      {milestone.period}
-                    </span>
-                    <h3 className="mt-4 text-lg leading-snug tracking-tight text-text">
-                      {milestone.title}
-                    </h3>
-                    <p className="mt-2.5 flex-1 text-sm leading-relaxed text-text-dim">
-                      {milestone.body}
-                    </p>
-                    {milestone.citation ? (
-                      <div className="mt-4">
-                        <Cite
-                          citation={milestone.citation}
-                          label={`Source: ${milestone.citation.outlet}`}
-                        />
-                      </div>
-                    ) : null}
-                  </div>
-                </Reveal>
-              ))}
+              <dl className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+                {practices.map((practice, index) => (
+                  <Reveal key={practice.title} delay={index * 0.05}>
+                    <dt className="flex items-center gap-3 text-lg tracking-tight text-text">
+                      <span aria-hidden className="h-px w-6 bg-gold-deep" />
+                      {practice.title}
+                    </dt>
+                    <dd className="mt-2 max-w-[40ch] pl-9 text-sm leading-relaxed text-text-dim">
+                      {practice.body}
+                    </dd>
+                  </Reveal>
+                ))}
+              </dl>
             </div>
 
-            <Reveal variant="right" delay={0.1} className="lg:col-span-3 lg:col-start-11 lg:pt-20">
+            <Reveal variant="right" delay={0.1} className="lg:col-span-4 lg:pt-24">
               <div className="rounded-card border border-line bg-page p-7">
-                <h3 className="text-xl leading-snug tracking-tight text-text">
-                  Follow the mission.
-                </h3>
+                <h3 className="text-xl leading-snug tracking-tight text-text">Stay in the loop.</h3>
                 <p className="mt-2.5 mb-6 text-sm leading-relaxed text-text-dim">
-                  Training milestones and programme news, as they happen.
+                  Project news, programmes for young people, and what we learn along the way.
                 </p>
-                <NewsletterForm source="home-record" />
+                <NewsletterForm source="home-practices" />
               </div>
             </Reveal>
           </div>
@@ -487,14 +440,15 @@ export default async function HomePage() {
           <div className="grid gap-12 lg:grid-cols-12">
             <Reveal variant="left" className="lg:col-span-7">
               <h2 className="text-[2.5rem] leading-[1.0] tracking-[-0.035em] text-on-navy sm:text-[3.25rem]">
-                Build it here, rather than <span className="text-gold">import it</span>.
+                Bring us a problem <span className="text-gold">on the ground</span>.
               </h2>
             </Reveal>
 
             <Reveal variant="right" delay={0.1} className="lg:col-span-4 lg:col-start-9 lg:pt-3">
               <p className="max-w-[46ch] leading-relaxed text-white/80">
-                ASTHERA is looking for institutions, funders and universities who want African space
-                capability built rather than bought in. If that is you, start here.
+                We work with government, universities, research organisations, companies, NGOs and
+                international bodies. Tell us the challenge and we will find the data that fits
+                it.
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href={cta.partner.href} variant="on-navy">
