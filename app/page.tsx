@@ -1,5 +1,4 @@
 import {
-  ArrowDown,
   ArrowRight,
   ChalkboardTeacher,
   MoonStars,
@@ -129,14 +128,6 @@ export default async function HomePage() {
             </Button>
           </Reveal>
         </Rail>
-
-        <a
-          href="#work"
-          aria-label="Scroll to our work"
-          className="absolute bottom-6 left-1/2 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-pill border border-white/15 bg-[#04070d]/55 text-white/80 backdrop-blur-md transition-[border-color,color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-gold/70 hover:text-gold"
-        >
-          <ArrowDown size={16} weight="regular" aria-hidden />
-        </a>
       </section>
 
       {/* What we do. Heading holds the left third; the six areas run as an
