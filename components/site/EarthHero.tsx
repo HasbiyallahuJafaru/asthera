@@ -43,28 +43,9 @@ export function EarthHero({
       const THREE = await import("three");
       if (disposed) return;
 
-      let renderer: ThreeNS.WebGLRenderer;
-      try {
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      } catch {
-        return; // No WebGL: the hero keeps the CSS gradient.
-      }
-
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      renderer.setPixelRatio(pixelRatio);
-      renderer.setClearColor(0x000000, 0);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.05;
-      renderer.domElement.style.position = "absolute";
-      renderer.domElement.style.inset = "0";
-      mount.appendChild(renderer.domElement);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 120);
-      camera.position.set(0, 0, 3.4);
-      const LOOK_AT = new THREE.Vector3(0, -0.1, 0);
-
-      // --- Textures, self-hosted, each optional so a miss degrades to colour.
+      // --- Textures first, self-hosted, each optional so a miss degrades to
+      // colour. No GL context exists yet, so unmounting mid-download (React's
+      // dev double mount, a fast navigation) has nothing to leak.
       const loader = new THREE.TextureLoader();
       const withTimeout = <T,>(promise: Promise<T>, ms: number) =>
         Promise.race([
@@ -77,7 +58,6 @@ export function EarthHero({
             .loadAsync(url)
             .then((texture) => {
               if (srgb) texture.colorSpace = THREE.SRGBColorSpace;
-              texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
               return texture;
             })
             .catch(() => null),
@@ -97,6 +77,41 @@ export function EarthHero({
         textures.forEach((texture) => texture?.dispose());
         return;
       }
+
+      // Ask for the context directly: when the browser refuses (no GPU, or
+      // WebGL blocked after earlier context losses) this returns null quietly,
+      // where the renderer constructor would log an error and throw.
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("webgl2", {
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+      if (!context) {
+        textures.forEach((texture) => texture?.dispose());
+        return; // No WebGL: the hero keeps the CSS gradient.
+      }
+      const renderer = new THREE.WebGLRenderer({ canvas, context, antialias: true, alpha: true });
+
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      renderer.setPixelRatio(pixelRatio);
+      renderer.setClearColor(0x000000, 0);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.05;
+      renderer.domElement.style.position = "absolute";
+      renderer.domElement.style.inset = "0";
+      mount.appendChild(renderer.domElement);
+
+      const anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+      textures.forEach((texture) => {
+        if (texture) texture.anisotropy = anisotropy;
+      });
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 120);
+      camera.position.set(0, 0, 3.4);
+      const LOOK_AT = new THREE.Vector3(0, -0.1, 0);
+
       if (cloudsMap) cloudsMap.wrapS = THREE.RepeatWrapping;
 
       // A 1x1 stand-in keeps every sampler bound when a texture misses.
@@ -516,7 +531,7 @@ export function EarthHero({
         if (running) raf = requestAnimationFrame(tick);
       };
       const start = () => {
-        if (running || reducedMotion) return;
+        if (running || reducedMotion || contextLost) return;
         running = true;
         clock.getDelta();
         raf = requestAnimationFrame(tick);
@@ -526,6 +541,17 @@ export function EarthHero({
         cancelAnimationFrame(raf);
       };
 
+      // If the GPU drops the context mid-visit, stop drawing and let the CSS
+      // gradient show through rather than freezing on a dead canvas.
+      let contextLost = false;
+      const onContextLost = (event: Event) => {
+        event.preventDefault();
+        contextLost = true;
+        stop();
+        setReady(false);
+      };
+      canvas.addEventListener("webglcontextlost", onContextLost);
+
       setSize();
       const extraTextures = fallbacks;
 
@@ -534,6 +560,7 @@ export function EarthHero({
         renderer.render(scene, camera);
         disposeScene = () => {
           resizeObserver.disconnect();
+          canvas.removeEventListener("webglcontextlost", onContextLost);
           teardown(scene, [...textures, ...extraTextures], renderer);
         };
         setReady(true);
@@ -564,6 +591,7 @@ export function EarthHero({
         intersectionObserver.disconnect();
         document.removeEventListener("visibilitychange", onVisibility);
         window.removeEventListener("pointermove", onPointerMove);
+        canvas.removeEventListener("webglcontextlost", onContextLost);
         teardown(scene, [...textures, ...extraTextures], renderer);
       };
 
@@ -617,5 +645,8 @@ function teardown(
   });
   textures.forEach((texture) => texture?.dispose());
   renderer.dispose();
+  // dispose() frees three's resources but leaves the context to the garbage
+  // collector; release it now so remounts never stack live contexts.
+  renderer.forceContextLoss();
   renderer.domElement.remove();
 }
