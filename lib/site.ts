@@ -499,11 +499,16 @@ export type TeamMember = {
 };
 
 /**
- * The ASTHERA team for the home page arc. Portraits live in /public/media as
- * `team-<slug>.jpg`; names and roles come from the member profiles in
- * /Asthera Team Members.
+ * The ASTHERA team for the home page arc, founder first. Portraits live in
+ * /public/media (team-<slug>.jpg for members, fauziyya-working.jpg for the
+ * founder).
  */
 export const teamMembers: TeamMember[] = [
+  {
+    photo: "fauziyya-working",
+    name: "Fauziyya Auwal Muhammad",
+    role: "Chief Executive Officer",
+  },
   { photo: "team-abdullahi", name: "Abdullahi Adegoke", role: "Project Manager" },
   {
     photo: "team-aisha",
