@@ -491,7 +491,7 @@ export const practices = [
   },
 ] as const;
 
-export type Volunteer = {
+export type TeamMember = {
   /** Base filename in /public/media for the portrait, without extension. */
   photo: string;
   name: string;
@@ -499,18 +499,32 @@ export type Volunteer = {
 };
 
 /**
- * Volunteers for the home page arc. PLACEHOLDERS: replace every entry with a
- * real, consenting volunteer before publishing (content/facts.md, section 5).
- * Portraits go in /public/media as `<photo>.jpg`, square, at least 800 x 800,
- * with the face centred: the carousel crops them to a circle.
+ * The ASTHERA team for the home page arc. Portraits live in /public/media as
+ * `team-<slug>.jpg`; names and roles come from the member profiles in
+ * /Asthera Team Members.
  */
-export const volunteers: Volunteer[] = [
-  { photo: "volunteer-1", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-2", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-3", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-4", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-5", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-6", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-7", name: "Volunteer name", role: "Role or area of work" },
-  { photo: "volunteer-8", name: "Volunteer name", role: "Role or area of work" },
+export const teamMembers: TeamMember[] = [
+  { photo: "team-abdullahi", name: "Abdullahi Adegoke", role: "Project Manager" },
+  {
+    photo: "team-aisha",
+    name: "Aisha Wakili",
+    role: "Co-Lead, Partnership and Business Development",
+  },
+  {
+    photo: "team-chidi",
+    name: "Nicholas Chidi Joseph",
+    role: "Project Coordinator, STEM and Outreach Education",
+  },
+  { photo: "team-ismail", name: "Dr. Ismail Magaji", role: "Lead, Research and Development" },
+  { photo: "team-mustapha", name: "Dr. Mustapha Isah", role: "Chief Operating Officer" },
+  {
+    photo: "team-mariana",
+    name: "Mariana Vasconcelos",
+    role: "Co-Lead, Earth Observation and GIS",
+  },
+  {
+    photo: "team-tijani",
+    name: "Habeeb Tijani",
+    role: "Lead, Earth Observation and GIS",
+  },
 ];

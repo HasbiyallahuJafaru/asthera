@@ -120,7 +120,7 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
         style={{ height: stageHeight }}
         role="group"
         aria-roledescription="carousel"
-        aria-label="Our volunteers"
+        aria-label="Our team"
       >
         {volunteers.map((volunteer, index) => {
           const offset = offsets[index];
@@ -186,7 +186,7 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
           <button
             type="button"
             onClick={() => turn(-1)}
-            aria-label="Previous volunteer"
+            aria-label="Previous team member"
             className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-pill border border-line-strong text-text transition-colors duration-200 hover:border-text"
           >
             <CaretLeft size={16} weight="bold" />
@@ -204,7 +204,7 @@ export function VolunteerArc({ volunteers: people }: { volunteers: VolunteerCard
           <button
             type="button"
             onClick={() => turn(1)}
-            aria-label="Next volunteer"
+            aria-label="Next team member"
             className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-pill border border-line-strong text-text transition-colors duration-200 hover:border-text"
           >
             <CaretRight size={16} weight="bold" />

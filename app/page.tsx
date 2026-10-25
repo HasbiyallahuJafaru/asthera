@@ -19,7 +19,7 @@ import { ProgrammeList } from "@/components/ui/ProgrammeList";
 import { Reveal } from "@/components/ui/Reveal";
 import { Rail, Section } from "@/components/ui/Section";
 import { pageMeta } from "@/lib/seo";
-import { approach, cta, founder, practices, volunteers } from "@/lib/site";
+import { approach, cta, founder, practices, teamMembers } from "@/lib/site";
 import { getPosts, getProgrammes } from "@/sanity/queries";
 
 export const revalidate = 60;
@@ -259,25 +259,24 @@ export default async function HomePage() {
         </Rail>
       </Section>
 
-      {/* Volunteers, on a row that moves one place every few seconds. */}
+      {/* The team, on a row that moves one place every few seconds. */}
       <Section>
         <Rail width="wide" className="py-24 lg:py-32">
           <Reveal className="mx-auto max-w-[40rem] text-center">
             <h2 className="text-[2.25rem] leading-[1.02] tracking-[-0.035em] text-text sm:text-[2.75rem]">
-              Meet our <span className="accent-word">volunteers</span>
+              Meet the <span className="accent-word">ASTHERA team</span>
             </h2>
             <p className="mx-auto mt-6 max-w-[48ch] leading-relaxed text-text-dim">
-              The people who give their time to run sessions, mentor students and build projects
-              with us.
+              The people who lead ASTHERA&apos;s programmes, research and partnerships.
             </p>
           </Reveal>
 
           <div className="mt-10">
             <VolunteerArc
-              volunteers={volunteers.map((volunteer) => ({
-                name: volunteer.name,
-                role: volunteer.role,
-                photo: resolveMedia(volunteer.photo),
+              volunteers={teamMembers.map((member) => ({
+                name: member.name,
+                role: member.role,
+                photo: resolveMedia(member.photo),
               }))}
             />
           </div>
